@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeliFrut · Recetario de la semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#4E9F3D; --verde-osc:#2E7D32; --lima:#8FBF3F; --lima-cl:#C6E377;
+  --crema:#FBFDF4; --tinta:#1B3A1B; --gris:#5B6B57; --linea:#E4EFD5;
+  --sombra:0 10px 30px -12px rgba(46,125,50,.28);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--crema);color:var(--tinta);
+  -webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.01em}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px}
+img{max-width:100%}
+
+/* header */
+.top{background:linear-gradient(135deg,var(--verde-osc),var(--verde));color:#fff;
+  padding:26px 0 30px;text-align:center;position:relative;overflow:hidden}
+.top::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:22px;
+  background:var(--crema);border-radius:22px 22px 0 0}
+.brand{font-family:'Fraunces',serif;font-size:24px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.brand b{color:var(--lima-cl)}
+.wk{margin-top:16px}
+.wk .chip{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  color:#fff;font-weight:800;font-size:13px;padding:6px 14px;border-radius:99px;backdrop-filter:blur(4px)}
+.wk h1{font-size:29px;margin:12px 0 6px}
+.wk p{color:#E9F6DD;font-weight:600;font-size:15px}
+
+/* seccion titulo */
+.sec-t{display:flex;align-items:center;gap:10px;margin:34px 0 16px}
+.sec-t .bar{width:30px;height:4px;border-radius:2px;background:var(--lima)}
+.sec-t h2{font-size:22px}
+.sec-t .sub{font-weight:700;font-size:13px;color:var(--gris);margin-left:auto}
+
+/* la caja: grilla de productos */
+.box{background:#fff;border:1px solid var(--linea);border-radius:20px;padding:18px;box-shadow:var(--sombra)}
+.items{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.item{text-align:center;padding:12px 6px;border-radius:14px;background:var(--crema);border:1px solid var(--linea)}
+.item .e{font-size:34px;line-height:1}
+.item b{display:block;font-weight:800;font-size:13px;margin-top:7px}
+.item small{color:var(--gris);font-weight:700;font-size:11px}
+.item.star{background:linear-gradient(135deg,var(--lima-cl),#EAF6D4);border-color:var(--lima)}
+
+/* banner sorpresa */
+.surprise{margin-top:16px;background:var(--verde-osc);color:#fff;border-radius:16px;padding:16px 18px;
+  display:flex;gap:14px;align-items:flex-start}
+.surprise .e{font-size:32px}
+.surprise b{font-family:'Fraunces',serif;font-size:18px;display:block;margin-bottom:3px}
+.surprise small{color:#E9F6DD;font-weight:600;font-size:14px}
+
+/* tabs recetas */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;background:#fff;border:1.5px solid var(--linea);color:var(--gris);font-weight:800;
+  font-size:14px;padding:10px 16px;border-radius:99px;cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.on{background:var(--verde);color:#fff;border-color:var(--verde)}
+
+/* card receta */
+.recipe{background:#fff;border:1px solid var(--linea);border-radius:20px;overflow:hidden;box-shadow:var(--sombra);
+  display:none;animation:fade .3s ease}
+.recipe.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.r-cover{padding:22px 20px;color:#fff;position:relative}
+.r-cover .tagline{font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.r-cover h3{font-size:25px;margin:6px 0 8px;line-height:1.1}
+.r-meta{display:flex;gap:16px;flex-wrap:wrap}
+.r-meta span{font-weight:800;font-size:13px;display:flex;align-items:center;gap:5px}
+.r-body{padding:20px}
+.r-body h4{font-family:'Nunito',sans-serif;font-weight:900;font-size:13px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--verde);margin-bottom:10px}
+.ing{list-style:none;display:grid;gap:8px;margin-bottom:22px}
+.ing li{display:flex;gap:10px;align-items:baseline;font-weight:700;font-size:15px;
+  padding-bottom:8px;border-bottom:1px dashed var(--linea)}
+.ing li .q{color:var(--verde-osc);font-weight:800;flex:none;min-width:70px}
+.ing li.box-tag .q::after{content:" 📦"}
+.steps{list-style:none;counter-reset:s;display:grid;gap:14px}
+.steps li{counter-increment:s;display:flex;gap:14px;font-weight:600;font-size:15px;color:var(--tinta)}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;
+  background:var(--lima-cl);color:var(--verde-osc);font-family:'Fraunces',serif;font-weight:600;font-size:16px;
+  display:flex;align-items:center;justify-content:center}
+.tip{margin-top:20px;background:var(--crema);border:1px dashed var(--lima);border-radius:14px;padding:14px 16px;
+  font-weight:700;font-size:14px;color:var(--verde-osc);display:flex;gap:10px}
+.tip .e{font-size:20px;flex:none}
+
+/* conservacion */
+.keep{background:#fff;border:1px solid var(--linea);border-radius:20px;padding:6px 18px}
+.keep-row{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--linea)}
+.keep-row:last-child{border-bottom:none}
+.keep-row .e{font-size:26px;flex:none;width:34px;text-align:center}
+.keep-row .txt b{font-weight:800;font-size:15px}
+.keep-row .txt small{display:block;color:var(--gris);font-weight:700;font-size:13px;margin-top:1px}
+
+/* footer */
+.foot{text-align:center;padding:36px 0 46px;color:var(--gris)}
+.foot .logo{font-family:'Fraunces',serif;font-size:20px;color:var(--verde-osc);font-weight:600}
+.foot .logo b{color:var(--verde)}
+.foot p{font-weight:700;font-size:13px;margin-top:8px}
+.foot .cta{display:inline-block;margin-top:18px;background:var(--verde);color:#fff;font-weight:800;
+  font-size:15px;padding:13px 24px;border-radius:14px;text-decoration:none}
+.eco{margin-top:24px;background:var(--lima-cl);border-radius:16px;padding:16px;font-weight:800;
+  font-size:14px;color:var(--verde-osc)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">🥬 Deli<b>Frut</b></div>
+  <div class="wrap wk">
+    <span class="chip">Semana 27 · Entrega del miércoles</span>
+    <h1>Tu recetario de la semana</h1>
+    <p>Plan Hogar · 6 verduras, 5 frutas y 1 sorpresa</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- LA CAJA -->
+  <div class="sec-t"><span class="bar"></span><h2>Qué llegó en tu caja</h2><span class="sub">12 productos</span></div>
+  <div class="box">
+    <div class="items">
+      <div class="item"><div class="e">🥬</div><b>Espinaca</b><small>1 atado</small></div>
+      <div class="item"><div class="e">🥕</div><b>Zanahoria</b><small>1 kg</small></div>
+      <div class="item"><div class="e">🍅</div><b>Tomate</b><small>1 kg</small></div>
+      <div class="item"><div class="e">🧅</div><b>Cebolla</b><small>750 g</small></div>
+      <div class="item"><div class="e">🥒</div><b>Zapallito</b><small>750 g</small></div>
+      <div class="item"><div class="e">🫑</div><b>Morrón rojo</b><small>3 u</small></div>
+      <div class="item"><div class="e">🍎</div><b>Manzana</b><small>1 kg</small></div>
+      <div class="item"><div class="e">🍊</div><b>Naranja</b><small>1 kg</small></div>
+      <div class="item"><div class="e">🍐</div><b>Pera</b><small>750 g</small></div>
+      <div class="item"><div class="e">🍌</div><b>Banana</b><small>1 kg</small></div>
+      <div class="item"><div class="e">🍋</div><b>Limón</b><small>500 g</small></div>
+      <div class="item star"><div class="e">✨</div><b>Hinojo</b><small>sorpresa</small></div>
+    </div>
+    <div class="surprise">
+      <div class="e">✨</div>
+      <div>
+        <b>Sorpresa: hinojo</b>
+        <small>Sabor suave y anisado, refrescante. Se come crudo en ensalada, asado al horno o salteado. Usá también las hojitas verdes como hierba.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECETAS -->
+  <div class="sec-t"><span class="bar"></span><h2>Recetas de la semana</h2><span class="sub">4 ideas</span></div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-r="0">⚡ Rápida</button>
+    <button class="tab" data-r="1">👨‍👩‍👧 Familiar</button>
+    <button class="tab" data-r="2">🥗 Saludable</button>
+    <button class="tab" data-r="3">✨ Con la sorpresa</button>
+  </div>
+
+  <!-- Receta 0: rápida -->
+  <article class="recipe show" data-r="0">
+    <div class="r-cover" style="background:linear-gradient(135deg,#E8552B,#F0864F)">
+      <div class="tagline">Lista en 15 minutos</div>
+      <h3>Salteado exprés de zapallito y morrón</h3>
+      <div class="r-meta"><span>⏱ 15 min</span><span>🍽 2 porciones</span><span>🔥 Fácil</span></div>
+    </div>
+    <div class="r-body">
+      <h4>Ingredientes</h4>
+      <ul class="ing">
+        <li class="box-tag"><span class="q">2 u</span> zapallitos en rodajas</li>
+        <li class="box-tag"><span class="q">1 u</span> morrón rojo en tiras</li>
+        <li class="box-tag"><span class="q">½ u</span> cebolla en pluma</li>
+        <li><span class="q">2 cda</span> aceite de oliva</li>
+        <li><span class="q">c/n</span> sal, pimienta y orégano</li>
+      </ul>
+      <h4>Preparación</h4>
+      <ol class="steps">
+        <li>Calentá el aceite en una sartén grande a fuego fuerte.</li>
+        <li>Sumá la cebolla y el morrón, salteá 3 minutos moviendo.</li>
+        <li>Agregá el zapallito y cociná 6–7 minutos más, que quede al dente.</li>
+        <li>Condimentá con sal, pimienta y orégano. Serví solo o sobre arroz.</li>
+      </ol>
+      <div class="tip"><span class="e">💡</span><div>Si te sobra, al día siguiente rellená una tortilla o un sándwich caliente.</div></div>
+    </div>
+  </article>
+
+  <!-- Receta 1: familiar -->
+  <article class="recipe" data-r="1">
+    <div class="r-cover" style="background:linear-gradient(135deg,#C0392B,#E8552B)">
+      <div class="tagline">Para toda la mesa</div>
+      <h3>Salsa de tomate casera con verduras</h3>
+      <div class="r-meta"><span>⏱ 40 min</span><span>🍽 4 porciones</span><span>🔥 Media</span></div>
+    </div>
+    <div class="r-body">
+      <h4>Ingredientes</h4>
+      <ul class="ing">
+        <li class="box-tag"><span class="q">6 u</span> tomates maduros en cubos</li>
+        <li class="box-tag"><span class="q">1 u</span> zanahoria rallada</li>
+        <li class="box-tag"><span class="q">1 u</span> cebolla picada</li>
+        <li class="box-tag"><span class="q">1 u</span> morrón picado</li>
+        <li><span class="q">2 dientes</span> ajo</li>
+        <li><span class="q">c/n</span> aceite, sal, azúcar y albahaca</li>
+      </ul>
+      <h4>Preparación</h4>
+      <ol class="steps">
+        <li>Rehogá la cebolla, el ajo y el morrón en aceite hasta que estén tiernos.</li>
+        <li>Sumá la zanahoria rallada (aporta dulzor natural) y cociná 3 minutos.</li>
+        <li>Agregá el tomate, sal y una pizca de azúcar para cortar la acidez.</li>
+        <li>Cociná a fuego bajo 25–30 minutos, revolviendo cada tanto.</li>
+        <li>Apagá, sumá albahaca y usá con pastas, ñoquis o pizza casera.</li>
+      </ol>
+      <div class="tip"><span class="e">❄️</span><div>Rinde de sobra: congelá la mitad en frascos para una cena de apuro.</div></div>
+    </div>
+  </article>
+
+  <!-- Receta 2: saludable -->
+  <article class="recipe" data-r="2">
+    <div class="r-cover" style="background:linear-gradient(135deg,#2E7D32,#4E9F3D)">
+      <div class="tagline">Liviana y nutritiva</div>
+      <h3>Ensalada tibia de espinaca, naranja y zanahoria</h3>
+      <div class="r-meta"><span>⏱ 20 min</span><span>🍽 2 porciones</span><span>🔥 Fácil</span></div>
+    </div>
+    <div class="r-body">
+      <h4>Ingredientes</h4>
+      <ul class="ing">
+        <li class="box-tag"><span class="q">1 atado</span> espinaca lavada</li>
+        <li class="box-tag"><span class="q">1 u</span> naranja en gajos</li>
+        <li class="box-tag"><span class="q">1 u</span> zanahoria en bastones</li>
+        <li class="box-tag"><span class="q">½ u</span> limón (jugo)</li>
+        <li><span class="q">1 puñado</span> semillas o frutos secos</li>
+        <li><span class="q">2 cda</span> aceite de oliva</li>
+      </ul>
+      <h4>Preparación</h4>
+      <ol class="steps">
+        <li>Salteá la zanahoria 5 minutos en un poco de aceite hasta que ablande apenas.</li>
+        <li>En un bowl, colocá la espinaca fresca y la zanahoria tibia encima.</li>
+        <li>Sumá los gajos de naranja y las semillas o frutos secos.</li>
+        <li>Aliñá con oliva, jugo de limón, sal y pimienta. Serví al momento.</li>
+      </ol>
+      <div class="tip"><span class="e">🌿</span><div>Sumá las hojitas del hinojo picadas: le dan un toque fresco y aromático.</div></div>
+    </div>
+  </article>
+
+  <!-- Receta 3: sorpresa -->
+  <article class="recipe" data-r="3">
+    <div class="r-cover" style="background:linear-gradient(135deg,#6B8E23,#8FBF3F)">
+      <div class="tagline">El descubrimiento de la semana</div>
+      <h3>Hinojo asado al horno con limón</h3>
+      <div class="r-meta"><span>⏱ 35 min</span><span>🍽 2–3 porciones</span><span>🔥 Fácil</span></div>
+    </div>
+    <div class="r-body">
+      <h4>Ingredientes</h4>
+      <ul class="ing">
+        <li class="box-tag"><span class="q">1 u</span> hinojo en gajos</li>
+        <li class="box-tag"><span class="q">1 u</span> limón (jugo y ralladura)</li>
+        <li><span class="q">3 cda</span> aceite de oliva</li>
+        <li><span class="q">c/n</span> sal, pimienta y miel (opcional)</li>
+      </ul>
+      <h4>Preparación</h4>
+      <ol class="steps">
+        <li>Cortá el bulbo de hinojo en gajos de 1 cm, sin quitar el centro (los une).</li>
+        <li>Mezclá aceite, jugo y ralladura de limón, sal y pimienta.</li>
+        <li>Bañá el hinojo y llevá a horno fuerte (200°) 25–30 minutos.</li>
+        <li>Dado vuelta a mitad de cocción. Queda dorado, tierno y dulzón.</li>
+      </ol>
+      <div class="tip"><span class="e">✨</span><div>Nuevo en casa: el hinojo asado pierde el sabor anisado y se vuelve suave y dulce. Ideal como guarnición.</div></div>
+    </div>
+  </article>
+
+  <!-- CONSERVACION -->
+  <div class="sec-t"><span class="bar"></span><h2>Cómo conservar cada producto</h2></div>
+  <div class="keep">
+    <div class="keep-row"><span class="e">🥬</span><div class="txt"><b>Espinaca</b><small>Lo más delicado: usala en los primeros 2–3 días. En bolsa perforada en la heladera.</small></div></div>
+    <div class="keep-row"><span class="e">🍅</span><div class="txt"><b>Tomate</b><small>Fuera de la heladera, a temperatura ambiente, para que no pierda sabor.</small></div></div>
+    <div class="keep-row"><span class="e">🥕</span><div class="txt"><b>Zanahoria</b><small>En la heladera, sin las hojas si las tuviera. Aguanta 2 semanas.</small></div></div>
+    <div class="keep-row"><span class="e">🍌</span><div class="txt"><b>Banana</b><small>Fuera de la heladera. Separala del resto para que no apure la maduración.</small></div></div>
+    <div class="keep-row"><span class="e">✨</span><div class="txt"><b>Hinojo</b><small>En la heladera hasta 5 días. Guardá aparte las hojitas verdes para usar como hierba.</small></div></div>
+  </div>
+
+  <div class="eco">♻️ Esta semana tu edificio agrupó 18 entregas en una sola parada. La caja es retornable: dejala lista para el próximo miércoles.</div>
+
+</div>
+
+<div class="foot wrap">
+  <div class="logo">🥬 Deli<b>Frut</b></div>
+  <p>¿Probaste una receta? Compartila y sumás puntos para tu próxima caja.</p>
+  <a class="cta" href="#">Subir mi receta</a>
+  <p style="margin-top:22px;opacity:.7">Semana 27 · delifrut.com.ar/recetario</p>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const recipes = document.querySelectorAll('.recipe');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    const r = t.dataset.r;
+    tabs.forEach(x => x.classList.toggle('on', x === t));
+    recipes.forEach(x => x.classList.toggle('show', x.dataset.r === r));
+    window.scrollTo({ top: document.querySelector('.tabs').offsetTop - 12, behavior: 'smooth' });
+  }));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeliFrut · La huerta llega fresca a tu edificio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" data-presets="react">
+const { useState, useMemo, useEffect, useRef } = React;
+
+
+/* ============================================================
+   DeliFrut — suscripción semanal de frutas y verduras
+   Todo el estado vive en memoria (sin backend ni localStorage).
+   Reemplazá los datos de ejemplo por los reales cuando quieras.
+   ============================================================ */
+
+// ---------- Datos de ejemplo ----------
+const PLANES = [
+  {
+    id: "individual",
+    nombre: "Individual",
+    lema: "Para una persona o pareja",
+    porEntrega: 6900,
+    mensual: 24900,
+    items: ["4–5 verduras", "3 frutas", "1 sorpresa", "Recetario"],
+    color: "#8FBF3F",
+    destacado: false,
+  },
+  {
+    id: "hogar",
+    nombre: "Hogar",
+    lema: "Parejas y familias chicas",
+    porEntrega: 9900,
+    mensual: 35900,
+    items: ["6–7 verduras", "5 frutas", "1 sorpresa", "Recetario + tips"],
+    color: "#4E9F3D",
+    destacado: true,
+  },
+  {
+    id: "familia",
+    nombre: "Familia",
+    lema: "Para cocinar en cantidad",
+    porEntrega: 13900,
+    mensual: 49900,
+    items: ["8–9 verduras", "7 frutas", "2 sorpresas", "Recetas para niños"],
+    color: "#2E7D32",
+    destacado: false,
+  },
+];
+
+const ESTILOS = [
+  { id: "tradicional", nombre: "Tradicional", emoji: "🧺", desc: "El mix clásico, equilibrado y sin sorpresas raras." },
+  { id: "frutas", nombre: "Más frutas", emoji: "🍎", desc: "Cargada de fruta fresca para picar todo el día." },
+  { id: "licuados", nombre: "Para licuados", emoji: "🥤", desc: "Frutas y verdes ideales para batidos y jugos." },
+  { id: "ensaladas", nombre: "Para ensaladas", emoji: "🥗", desc: "Hojas, tomates y crocantes listos para el bowl." },
+  { id: "ninos", nombre: "Con niños", emoji: "🧒", desc: "Sabores amables y recetas que los chicos comen." },
+  { id: "descubrir", nombre: "Quiero descubrir", emoji: "✨", desc: "Sumá ingredientes nuevos cada semana." },
+];
+
+const COMPLEMENTOS = [
+  { id: "huevos", nombre: "Huevos de campo", precio: 3200, emoji: "🥚", u: "×12" },
+  { id: "pan", nombre: "Pan integral", precio: 2500, emoji: "🍞", u: "500g" },
+  { id: "secos", nombre: "Frutos secos", precio: 4800, emoji: "🥜", u: "250g" },
+  { id: "legumbres", nombre: "Legumbres", precio: 2100, emoji: "🫘", u: "500g" },
+  { id: "miel", nombre: "Miel pura", precio: 3900, emoji: "🍯", u: "500g" },
+  { id: "hierbas", nombre: "Hierbas frescas", precio: 1800, emoji: "🌿", u: "atado" },
+  { id: "jugos", nombre: "Jugo natural", precio: 2900, emoji: "🧃", u: "1L" },
+  { id: "sopa", nombre: "Combo sopa", precio: 3400, emoji: "🍲", u: "kit" },
+];
+
+const EXCLUIBLES = [
+  "Cebolla", "Berenjena", "Remolacha", "Zapallo", "Rúcula", "Repollo",
+  "Puerro", "Nabo", "Coliflor", "Pomelo", "Kiwi", "Palta",
+];
+
+const SORPRESAS = [
+  { n: "Hinojo", d: "Sabor suave y fresco. Crudo en ensalada, al horno o salteado." },
+  { n: "Kale", d: "Salteá con ajo o hacé chips al horno. Rendidor y nutritivo." },
+  { n: "Pak choi", d: "Perfecto en wok. Se cocina en minutos, tallo y hoja." },
+  { n: "Maracuyá", d: "Ácido y aromático. Ideal para jugos, mousse o aderezos." },
+];
+
+const EDIFICIOS = [
+  "Torre del Parque — Nueva Córdoba",
+  "Edificio Rioja 1200 — Centro",
+  "Complejo Alto Villa Sol — Cerro",
+  "Residencial General Paz",
+  "Otro (lo agrego yo)",
+];
+const DIAS = ["Miércoles", "Jueves", "Viernes"];
+const FRANJAS = ["10–12 hs", "14–16 hs", "18–20 hs"];
+
+const peso = (n) => "$" + n.toLocaleString("es-AR");
+
+// ---------- Estilos globales ----------
+const CSS = `
+:root{
+  --verde:#4E9F3D; --verde-osc:#2E7D32; --lima:#8FBF3F; --lima-cl:#C6E377;
+  --crema:#FBFDF4; --tinta:#1B3A1B; --gris:#5B6B57; --linea:#E4EFD5;
+  --sombra:0 10px 30px -12px rgba(46,125,50,.28);
+  --radio:20px;
+}
+*{box-sizing:border-box}
+.df-root{
+  font-family:'Nunito',system-ui,-apple-system,sans-serif;
+  color:var(--tinta); background:var(--crema); min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.df-root h1,.df-root h2,.df-root h3{font-family:'Fraunces','Nunito',serif;font-weight:600;letter-spacing:-.01em;margin:0}
+button{font-family:inherit;cursor:pointer;border:none}
+img{max-width:100%}
+a{color:inherit}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:20px;
+  padding:14px clamp(16px,5vw,56px);background:rgba(251,253,244,.86);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.logo{font-family:'Fraunces',serif;font-size:26px;font-weight:600;display:flex;align-items:center;gap:6px}
+.logo b{color:var(--verde)}
+.nav-links{display:flex;gap:22px;margin-left:8px}
+.nav-links a{font-weight:700;font-size:15px;color:var(--gris);text-decoration:none;padding:6px 0;position:relative}
+.nav-links a:hover{color:var(--verde-osc)}
+.nav-spacer{flex:1}
+.nav-btn{background:none;color:var(--verde-osc);font-weight:800;font-size:15px;padding:9px 14px;border-radius:12px}
+.nav-btn:hover{background:var(--lima-cl)}
+.cart-btn{position:relative;background:var(--verde);color:#fff;font-weight:800;
+  padding:10px 18px;border-radius:14px;font-size:15px;display:flex;align-items:center;gap:8px}
+.cart-btn:hover{background:var(--verde-osc)}
+.cart-badge{position:absolute;top:-8px;right:-8px;background:#E8552B;color:#fff;
+  font-size:12px;font-weight:800;min-width:22px;height:22px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;padding:0 5px}
+@media(max-width:820px){.nav-links{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:clamp(48px,7vw,96px) clamp(16px,5vw,56px) clamp(56px,8vw,110px)}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 80% at 100% 0%,var(--lima-cl) 0%,transparent 55%),
+             radial-gradient(90% 70% at 0% 100%,#DFF0C4 0%,transparent 60%)}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;
+  gap:48px;align-items:center;max-width:1180px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--linea);
+  color:var(--verde-osc);font-weight:800;font-size:13px;padding:7px 14px;border-radius:99px;
+  box-shadow:var(--sombra)}
+.hero h1{font-size:clamp(38px,6vw,66px);line-height:1.02;margin:22px 0 18px}
+.hero h1 em{font-style:italic;color:var(--verde)}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--gris);max-width:30ch;font-weight:600;line-height:1.5}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn-main{background:var(--verde);color:#fff;font-weight:800;font-size:17px;
+  padding:15px 28px;border-radius:16px;box-shadow:var(--sombra)}
+.btn-main:hover{background:var(--verde-osc);transform:translateY(-1px)}
+.btn-ghost{background:#fff;color:var(--verde-osc);font-weight:800;font-size:17px;
+  padding:15px 26px;border-radius:16px;border:1px solid var(--linea)}
+.btn-ghost:hover{background:var(--lima-cl)}
+.hero-tags{display:flex;gap:18px;flex-wrap:wrap;margin-top:30px}
+.hero-tag{font-weight:700;font-size:14px;color:var(--gris);display:flex;align-items:center;gap:7px}
+.hero-tag .dot{width:9px;height:9px;border-radius:50%;background:var(--lima)}
+
+/* caja ilustrada */
+.crate{position:relative;background:#fff;border:1px solid var(--linea);border-radius:28px;
+  padding:26px;box-shadow:var(--sombra);transform:rotate(-1.4deg)}
+.crate-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.crate-top b{font-family:'Fraunces',serif;font-size:19px}
+.crate-chip{background:var(--lima-cl);color:var(--verde-osc);font-weight:800;font-size:12px;
+  padding:5px 11px;border-radius:99px}
+.veg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.veg{aspect-ratio:1;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:30px;background:var(--crema);border:1px solid var(--linea)}
+.veg.pop{animation:pop .5s ease both}
+@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.crate-note{margin-top:16px;background:var(--crema);border:1px dashed var(--lima);border-radius:14px;
+  padding:12px 14px;font-size:13px;font-weight:700;color:var(--verde-osc)}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:36px}.crate{transform:none;max-width:420px}}
+
+/* secciones */
+.sec{padding:clamp(48px,7vw,88px) clamp(16px,5vw,56px)}
+.sec-head{max-width:640px;margin:0 auto 44px;text-align:center}
+.sec-head .kicker{color:var(--verde);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.sec-head h2{font-size:clamp(28px,4vw,44px);margin:10px 0 12px}
+.sec-head p{color:var(--gris);font-weight:600;font-size:17px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto}
+
+/* planes */
+.planes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.plan{background:#fff;border:1.5px solid var(--linea);border-radius:var(--radio);padding:28px 24px;
+  display:flex;flex-direction:column;position:relative;transition:.2s}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.plan.top{border-color:var(--verde);box-shadow:var(--sombra)}
+.plan-flag{position:absolute;top:-13px;left:24px;background:var(--verde);color:#fff;font-weight:800;
+  font-size:12px;padding:5px 13px;border-radius:99px}
+.plan h3{font-size:25px}
+.plan .lema{color:var(--gris);font-weight:700;font-size:14px;margin:4px 0 18px}
+.plan .precio{display:flex;align-items:baseline;gap:6px}
+.plan .precio b{font-family:'Fraunces',serif;font-size:38px;color:var(--verde-osc)}
+.plan .precio span{color:var(--gris);font-weight:700;font-size:15px}
+.plan .mensual{color:var(--gris);font-weight:700;font-size:14px;margin-top:4px;
+  background:var(--crema);border-radius:10px;padding:6px 10px;display:inline-block}
+.plan ul{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:10px}
+.plan li{display:flex;gap:9px;align-items:center;font-weight:700;font-size:15px;color:var(--tinta)}
+.plan li .tick{color:var(--verde);font-weight:900}
+.plan .plan-btn{margin-top:auto;background:var(--lima-cl);color:var(--verde-osc);font-weight:800;
+  font-size:16px;padding:13px;border-radius:14px;transition:.15s}
+.plan .plan-btn:hover{background:var(--verde);color:#fff}
+.plan.top .plan-btn{background:var(--verde);color:#fff}
+.plan.top .plan-btn:hover{background:var(--verde-osc)}
+@media(max-width:820px){.planes{grid-template-columns:1fr}}
+
+/* estilos de caja */
+.estilos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.estilo{background:#fff;border:1.5px solid var(--linea);border-radius:18px;padding:22px;text-align:left;
+  transition:.15s;position:relative}
+.estilo:hover{border-color:var(--lima);transform:translateY(-3px)}
+.estilo.sel{border-color:var(--verde);background:#F5FBEC;box-shadow:var(--sombra)}
+.estilo .emoji{font-size:34px}
+.estilo h3{font-size:19px;margin:10px 0 6px}
+.estilo p{color:var(--gris);font-weight:600;font-size:14px;line-height:1.45}
+.estilo .mark{position:absolute;top:16px;right:16px;width:26px;height:26px;border-radius:50%;
+  background:var(--verde);color:#fff;display:none;align-items:center;justify-content:center;font-weight:900}
+.estilo.sel .mark{display:flex}
+@media(max-width:820px){.estilos{grid-template-columns:1fr}}
+
+/* como funciona */
+.pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:p}
+.paso{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:24px 20px;position:relative}
+.paso .num{font-family:'Fraunces',serif;font-size:40px;color:var(--lima);line-height:1}
+.paso h3{font-size:18px;margin:8px 0 6px}
+.paso p{color:var(--gris);font-weight:600;font-size:14px;line-height:1.45}
+@media(max-width:820px){.pasos{grid-template-columns:1fr 1fr}}
+
+/* sorpresa banda */
+.sorpresa{background:linear-gradient(120deg,var(--verde-osc),var(--verde));border-radius:28px;
+  padding:clamp(28px,5vw,52px);color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;overflow:hidden;position:relative}
+.sorpresa .kicker{color:var(--lima-cl);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.sorpresa h2{color:#fff;font-size:clamp(26px,4vw,40px);margin:10px 0 14px}
+.sorpresa p{color:#E9F6DD;font-weight:600;font-size:17px;line-height:1.5;max-width:38ch}
+.sorpresa-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  border-radius:20px;padding:24px;backdrop-filter:blur(6px)}
+.sorpresa-card .big{font-size:56px}
+.sorpresa-card b{display:block;font-family:'Fraunces',serif;font-size:24px;margin:6px 0 8px}
+.sorpresa-card small{color:#E9F6DD;font-weight:600;font-size:15px;line-height:1.5}
+.rot{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.rot button{background:rgba(255,255,255,.15);color:#fff;font-weight:800;font-size:13px;
+  padding:7px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.2)}
+.rot button.on{background:var(--lima);color:var(--verde-osc)}
+@media(max-width:820px){.sorpresa{grid-template-columns:1fr}}
+
+/* complementos */
+.comps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.comp{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:18px;text-align:center;transition:.15s}
+.comp:hover{border-color:var(--lima)}
+.comp .emoji{font-size:32px}
+.comp b{display:block;font-weight:800;font-size:15px;margin:8px 0 2px}
+.comp .u{color:var(--gris);font-weight:700;font-size:13px}
+.comp .pr{color:var(--verde-osc);font-weight:800;font-size:16px;margin:6px 0 12px}
+.comp .add{background:var(--lima-cl);color:var(--verde-osc);font-weight:800;font-size:14px;
+  padding:9px;border-radius:11px;width:100%}
+.comp .add:hover{background:var(--verde);color:#fff}
+.comp.in .add{background:var(--verde);color:#fff}
+@media(max-width:820px){.comps{grid-template-columns:1fr 1fr}}
+
+/* footer */
+.foot{background:var(--verde-osc);color:#DFF0C4;padding:48px clamp(16px,5vw,56px) 34px;margin-top:40px}
+.foot-grid{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
+.foot .logo{color:#fff;margin-bottom:10px}
+.foot .logo b{color:var(--lima-cl)}
+.foot p{font-weight:600;font-size:15px;line-height:1.6;max-width:34ch}
+.foot h4{font-family:'Fraunces',serif;color:#fff;font-size:17px;margin:0 0 12px}
+.foot ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.foot ul a{font-weight:700;font-size:14px;text-decoration:none;color:#DFF0C4}
+.foot ul a:hover{color:#fff}
+.foot-base{max-width:1120px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.15);
+  font-weight:700;font-size:13px;opacity:.8}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr}}
+
+/* overlay + drawer */
+.overlay{position:fixed;inset:0;background:rgba(27,58,27,.42);z-index:60;animation:fade .2s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--crema);
+  z-index:70;display:flex;flex-direction:column;box-shadow:-20px 0 50px -20px rgba(0,0,0,.3);
+  animation:slide .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes slide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--linea)}
+.drawer-head h3{font-size:22px}
+.x{background:none;font-size:26px;color:var(--gris);width:38px;height:38px;border-radius:10px;line-height:1}
+.x:hover{background:var(--lima-cl);color:var(--verde-osc)}
+.drawer-body{flex:1;overflow-y:auto;padding:18px 22px}
+.empty{text-align:center;color:var(--gris);font-weight:700;padding:50px 20px}
+.empty .big{font-size:52px;margin-bottom:12px}
+.line{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:14px;margin-bottom:12px;
+  display:flex;gap:12px;align-items:flex-start}
+.line .ico{font-size:26px;flex:none}
+.line .info{flex:1}
+.line .info b{font-weight:800;font-size:15px}
+.line .info small{display:block;color:var(--gris);font-weight:700;font-size:13px;margin-top:2px}
+.line .pr{font-weight:800;color:var(--verde-osc);font-size:15px}
+.qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty button{width:26px;height:26px;border-radius:8px;background:var(--lima-cl);color:var(--verde-osc);
+  font-weight:900;font-size:15px;line-height:1}
+.qty button:hover{background:var(--verde);color:#fff}
+.qty span{font-weight:800;min-width:20px;text-align:center}
+.rm{background:none;color:#C1462B;font-weight:800;font-size:13px;margin-left:auto}
+.rm:hover{text-decoration:underline}
+.drawer-foot{border-top:1px solid var(--linea);padding:18px 22px;background:#fff}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:15px;margin-bottom:4px;color:var(--gris)}
+.tot.big{font-size:20px;color:var(--tinta);margin:8px 0 14px}
+.tot.big b{font-family:'Fraunces',serif;color:var(--verde-osc)}
+.co-btn{background:var(--verde);color:#fff;font-weight:800;font-size:17px;width:100%;padding:15px;border-radius:14px}
+.co-btn:hover{background:var(--verde-osc)}
+.mini{font-weight:700;font-size:12px;color:var(--gris);text-align:center;margin-top:10px}
+
+/* modal generico */
+.modal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-card{background:var(--crema);border-radius:26px;width:min(560px,100%);max-height:92vh;overflow-y:auto;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.4);animation:up .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{padding:24px 26px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.modal-head h2{font-size:26px}
+.modal-head p{color:var(--gris);font-weight:600;font-size:15px;margin-top:6px}
+.modal-body{padding:20px 26px 26px}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:800;font-size:14px;margin-bottom:7px}
+.field input,.field select{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--linea);
+  background:#fff;font-family:inherit;font-size:15px;font-weight:600;color:var(--tinta)}
+.field input:focus,.field select:focus{outline:none;border-color:var(--verde)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#fff;border:1.5px solid var(--linea);border-radius:99px;padding:9px 15px;font-weight:800;font-size:14px;color:var(--gris)}
+.chip:hover{border-color:var(--lima)}
+.chip.on{background:var(--verde);color:#fff;border-color:var(--verde)}
+.chip.small{padding:7px 13px;font-size:13px}
+.pill-btn{background:var(--verde);color:#fff;font-weight:800;font-size:16px;width:100%;padding:14px;border-radius:14px;margin-top:6px}
+.pill-btn:hover{background:var(--verde-osc)}
+.pill-btn.ghost{background:var(--lima-cl);color:var(--verde-osc);margin-top:10px}
+.pill-btn.ghost:hover{background:var(--verde);color:#fff}
+.subtle{font-weight:700;font-size:13px;color:var(--gris);text-align:center;margin-top:14px}
+.subtle a{color:var(--verde-osc);font-weight:800;cursor:pointer;text-decoration:underline}
+.ok-check{width:76px;height:76px;border-radius:50%;background:var(--verde);color:#fff;font-size:40px;
+  display:flex;align-items:center;justify-content:center;margin:6px auto 18px;animation:pop .5s ease both}
+.res{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:16px;margin:14px 0;text-align:left}
+.res div{display:flex;justify-content:space-between;font-weight:700;font-size:14px;padding:5px 0;color:var(--gris)}
+.res div b{color:var(--tinta)}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;background:var(--verde-osc);
+  color:#fff;font-weight:800;font-size:15px;padding:14px 22px;border-radius:14px;box-shadow:var(--sombra);
+  display:flex;align-items:center;gap:10px;animation:toastin .3s ease both}
+@keyframes toastin{from{transform:translateX(-50%) translateY(20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+
+/* step indicator checkout */
+.steps{display:flex;gap:8px;margin-bottom:22px}
+.steps .s{flex:1;height:6px;border-radius:3px;background:var(--linea)}
+.steps .s.on{background:var(--verde)}
+`;
+
+// ---------- App ----------
+function App() {
+  const [cart, setCart] = useState([]); // {key,type,id,nombre,estilo,precio,mensual,qty,ico}
+  const [drawer, setDrawer] = useState(false);
+  const [estiloSel, setEstiloSel] = useState("tradicional");
+  const [modal, setModal] = useState(null); // null | 'plan' | 'login' | 'checkout' | 'done'
+  const [planPend, setPlanPend] = useState(null);
+  const [user, setUser] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [popIdx, setPopIdx] = useState(-1);
+
+  const toastRef = useRef();
+  const flash = (msg) => {
+    setToast(msg);
+    clearTimeout(toastRef.current);
+    toastRef.current = setTimeout(() => setToast(null), 2200);
+  };
+
+  // animación de la caja del hero
+  useEffect(() => {
+    const veg = ["🥕", "🍅", "🥬", "🍎", "🥦", "🍊", "🫑", "✨"];
+    let i = 0;
+    const t = setInterval(() => {
+      setPopIdx(i % veg.length);
+      i++;
+    }, 900);
+    return () => clearInterval(t);
+  }, []);
+
+  const count = cart.reduce((a, c) => a + c.qty, 0);
+  const totalEntrega = cart.reduce((a, c) => a + c.precio * c.qty, 0);
+  const totalMensual = cart.reduce((a, c) => a + (c.mensual || c.precio * 4) * c.qty, 0);
+
+  // ----- carrito -----
+  const addPlan = (plan, estilo) => {
+    const key = "plan-" + plan.id + "-" + estilo;
+    setCart((c) => {
+      const ex = c.find((x) => x.key === key);
+      if (ex) return c.map((x) => (x.key === key ? { ...x, qty: x.qty + 1 } : x));
+      const est = ESTILOS.find((e) => e.id === estilo);
+      return [...c, {
+        key, type: "plan", id: plan.id,
+        nombre: "Plan " + plan.nombre, estilo: est.nombre, ico: est.emoji,
+        precio: plan.porEntrega, mensual: plan.mensual, qty: 1,
+      }];
+    });
+    flash("Sumaste el Plan " + plan.nombre + " 🧺");
+    setDrawer(true);
+  };
+
+  const addComp = (comp) => {
+    const key = "comp-" + comp.id;
+    setCart((c) => {
+      const ex = c.find((x) => x.key === key);
+      if (ex) return c.map((x) => (x.key === key ? { ...x, qty: x.qty + 1 } : x));
+      return [...c, {
+        key, type: "comp", id: comp.id, nombre: comp.nombre, estilo: comp.u,
+        ico: comp.emoji, precio: comp.precio, mensual: comp.precio * 4, qty: 1,
+      }];
+    });
+    flash(comp.nombre + " agregado ✓");
+  };
+
+  const setQty = (key, d) =>
+    setCart((c) => c.flatMap((x) => {
+      if (x.key !== key) return [x];
+      const q = x.qty + d;
+      return q <= 0 ? [] : [{ ...x, qty: q }];
+    }));
+  const removeLine = (key) => setCart((c) => c.filter((x) => x.key !== key));
+
+  // ----- flujo de plan -----
+  const openPlan = (plan) => { setPlanPend(plan); setModal("plan"); };
+  const confirmPlan = (estilo, exclu) => {
+    addPlan(planPend, estilo);
+    setModal(null);
+  };
+
+  const goCheckout = () => {
+    if (!cart.length) return;
+    if (!user) { setDrawer(false); setModal("login"); return; }
+    setDrawer(false); setModal("checkout");
+  };
+
+  return (
+    <div className="df-root">
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Nunito:wght@600;700;800;900&display=swap');`}</style>
+      <style>{CSS}</style>
+
+      {/* NAV */}
+      <nav className="nav">
+        <div className="logo">🥬 Deli<b>Frut</b></div>
+        <div className="nav-links">
+          <a href="#planes">Planes</a>
+          <a href="#estilos">Estilos de caja</a>
+          <a href="#como">Cómo funciona</a>
+          <a href="#extras">Extras</a>
+        </div>
+        <div className="nav-spacer" />
+        <button className="nav-btn" onClick={() => setModal(user ? "cuenta" : "login")}>
+          {user ? "Hola, " + user.nombre.split(" ")[0] : "Ingresar"}
+        </button>
+        <button className="cart-btn" onClick={() => setDrawer(true)}>
+          🛒 Carrito
+          {count > 0 && <span className="cart-badge">{count}</span>}
+        </button>
+      </nav>
+
+      {/* HERO */}
+      <header className="hero">
+        <div className="hero-bg" />
+        <div className="hero-grid">
+          <div>
+            <span className="eyebrow">🌱 Suscripción semanal · Córdoba</span>
+            <h1>La huerta llega <em>fresca</em> a tu edificio</h1>
+            <p className="lead">Elegís un plan y nosotros armamos la caja. Frutas y verduras de estación, recetas simples y un ingrediente sorpresa cada semana.</p>
+            <div className="hero-cta">
+              <button className="btn-main" onClick={() => document.getElementById("planes").scrollIntoView({ behavior: "smooth" })}>
+                Ver planes
+              </button>
+              <button className="btn-ghost" onClick={() => document.getElementById("como").scrollIntoView({ behavior: "smooth" })}>
+                Cómo funciona
+              </button>
+            </div>
+            <div className="hero-tags">
+              <span className="hero-tag"><span className="dot" />Frescura garantizada</span>
+              <span className="hero-tag"><span className="dot" />Entrega por edificio</span>
+              <span className="hero-tag"><span className="dot" />Pausá cuando quieras</span>
+            </div>
+          </div>
+
+          <div className="crate">
+            <div className="crate-top">
+              <b>Tu caja de esta semana</b>
+              <span className="crate-chip">Miércoles 18–20 hs</span>
+            </div>
+            <div className="veg-grid">
+              {["🥕","🍅","🥬","🍎","🥦","🍊","🫑","🍆","🥒","🍐","🌽","✨"].map((v, i) => (
+                <div key={i} className={"veg" + (i === popIdx ? " pop" : "")}>{v}</div>
+              ))}
+            </div>
+            <div className="crate-note">✨ Sorpresa de la semana: hinojo — suave y fresco, ideal en ensalada.</div>
+          </div>
+        </div>
+      </header>
+
+      {/* PLANES */}
+      <section className="sec" id="planes">
+        <div className="sec-head">
+          <div className="kicker">Elegí tu plan</div>
+          <h2>Un plan, y listo</h2>
+          <p>No comprás fruta por fruta. Elegís el tamaño de caja según cuántos son y nosotros la armamos fresca cada semana.</p>
+        </div>
+        <div className="wrap">
+          <div className="planes">
+            {PLANES.map((p) => (
+              <div key={p.id} className={"plan" + (p.destacado ? " top" : "")}>
+                {p.destacado && <span className="plan-flag">El más elegido</span>}
+                <h3>{p.nombre}</h3>
+                <div className="lema">{p.lema}</div>
+                <div className="precio"><b>{peso(p.porEntrega)}</b><span>/ entrega</span></div>
+                <div className="mensual">{peso(p.mensual)} por mes · 4 entregas</div>
+                <ul>
+                  {p.items.map((it, i) => (
+                    <li key={i}><span className="tick">✓</span>{it}</li>
+                  ))}
+                </ul>
+                <button className="plan-btn" onClick={() => openPlan(p)}>Elegir {p.nombre}</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ESTILOS */}
+      <section className="sec" id="estilos" style={{ background: "#F5FBEC" }}>
+        <div className="sec-head">
+          <div className="kicker">Personalizá sin complicarte</div>
+          <h2>Elegí el estilo de tu caja</h2>
+          <p>El mismo plan, con un enfoque distinto. Cambia el mix de la caja sin que tengas que elegir producto por producto.</p>
+        </div>
+        <div className="wrap">
+          <div className="estilos">
+            {ESTILOS.map((e) => (
+              <button key={e.id} className={"estilo" + (estiloSel === e.id ? " sel" : "")} onClick={() => setEstiloSel(e.id)}>
+                <span className="mark">✓</span>
+                <div className="emoji">{e.emoji}</div>
+                <h3>{e.nombre}</h3>
+                <p>{e.desc}</p>
+              </button>
+            ))}
+          </div>
+          <p style={{ textAlign: "center", marginTop: 24, color: "var(--gris)", fontWeight: 700 }}>
+            Tu estilo elegido: <b style={{ color: "var(--verde-osc)" }}>{ESTILOS.find((e) => e.id === estiloSel).nombre}</b> — se aplica cuando sumás un plan.
+          </p>
+        </div>
+      </section>
+
+      {/* COMO FUNCIONA */}
+      <section className="sec" id="como">
+        <div className="sec-head">
+          <div className="kicker">Simple de verdad</div>
+          <h2>Cómo funciona</h2>
+        </div>
+        <div className="wrap">
+          <div className="pasos">
+            {[
+              ["Elegís tu plan", "Individual, Hogar o Familia según cuántos son en casa."],
+              ["Definís el estilo", "Más frutas, para licuados, con niños… vos elegís el enfoque."],
+              ["Recibís en tu edificio", "Día y franja fijos. Entregas agrupadas, menos costo y menos emisiones."],
+              ["Cocinás fácil", "Recetario semanal y sorpresa con instrucciones para no desperdiciar."],
+            ].map((s, i) => (
+              <div key={i} className="paso">
+                <div className="num">{String(i + 1).padStart(2, "0")}</div>
+                <h3>{s[0]}</h3>
+                <p>{s[1]}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SORPRESA */}
+      <section className="sec">
+        <div className="wrap">
+          <SorpresaBanda />
+        </div>
+      </section>
+
+      {/* COMPLEMENTOS */}
+      <section className="sec" id="extras" style={{ background: "#F5FBEC" }}>
+        <div className="sec-head">
+          <div className="kicker">Sumá lo que quieras</div>
+          <h2>Complementos</h2>
+          <p>Agregá extras a tu caja con un toque. Se suman a tu suscripción y llegan el mismo día.</p>
+        </div>
+        <div className="wrap">
+          <div className="comps">
+            {COMPLEMENTOS.map((c) => {
+              const inCart = cart.some((x) => x.key === "comp-" + c.id);
+              return (
+                <div key={c.id} className={"comp" + (inCart ? " in" : "")}>
+                  <div className="emoji">{c.emoji}</div>
+                  <b>{c.nombre}</b>
+                  <div className="u">{c.u}</div>
+                  <div className="pr">{peso(c.precio)}</div>
+                  <button className="add" onClick={() => addComp(c)}>{inCart ? "Sumar otro +" : "Agregar"}</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="foot">
+        <div className="foot-grid">
+          <div>
+            <div className="logo">🥬 Deli<b>Frut</b></div>
+            <p>Suscripción semanal de frutas y verduras frescas para quienes viven en edificios. Más variedad, menos desperdicio.</p>
+          </div>
+          <div>
+            <h4>Servicio</h4>
+            <ul>
+              <li><a href="#planes">Planes</a></li>
+              <li><a href="#estilos">Estilos de caja</a></li>
+              <li><a href="#extras">Complementos</a></li>
+              <li><a href="#como">Cómo funciona</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Confianza</h4>
+            <ul>
+              <li><a href="#">Garantía Frescura Total</a></li>
+              <li><a href="#">Sustentabilidad</a></li>
+              <li><a href="#">Embajador del edificio</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="foot-base">© 2026 DeliFrut · Córdoba, Argentina · Hecho con productos de estación</div>
+      </footer>
+
+      {/* DRAWER CARRITO */}
+      {drawer && (
+        <>
+          <div className="overlay" onClick={() => setDrawer(false)} />
+          <aside className="drawer" role="dialog" aria-label="Carrito">
+            <div className="drawer-head">
+              <h3>Tu carrito</h3>
+              <button className="x" onClick={() => setDrawer(false)} aria-label="Cerrar">×</button>
+            </div>
+            <div className="drawer-body">
+              {!cart.length ? (
+                <div className="empty">
+                  <div className="big">🧺</div>
+                  Tu caja está vacía.<br />Elegí un plan para empezar.
+                </div>
+              ) : (
+                cart.map((l) => (
+                  <div key={l.key} className="line">
+                    <div className="ico">{l.ico}</div>
+                    <div className="info">
+                      <b>{l.nombre}</b>
+                      <small>{l.type === "plan" ? "Estilo: " + l.estilo : l.estilo}</small>
+                      <div className="qty">
+                        <button onClick={() => setQty(l.key, -1)}>−</button>
+                        <span>{l.qty}</span>
+                        <button onClick={() => setQty(l.key, 1)}>+</button>
+                        <button className="rm" onClick={() => removeLine(l.key)}>Quitar</button>
+                      </div>
+                    </div>
+                    <div className="pr">{peso(l.precio * l.qty)}</div>
+                  </div>
+                ))
+              )}
+            </div>
+            {cart.length > 0 && (
+              <div className="drawer-foot">
+                <div className="tot"><span>Por entrega</span><span>{peso(totalEntrega)}</span></div>
+                <div className="tot big"><span>Mensual (4 entregas)</span><b>{peso(totalMensual)}</b></div>
+                <button className="co-btn" onClick={goCheckout}>Ir a pagar</button>
+                <div className="mini">Podés pausar o cancelar tu suscripción cuando quieras.</div>
+              </div>
+            )}
+          </aside>
+        </>
+      )}
+
+      {/* MODAL: ELEGIR ESTILO AL SUMAR PLAN */}
+      {modal === "plan" && planPend && (
+        <PlanModal
+          plan={planPend}
+          estiloInit={estiloSel}
+          onClose={() => setModal(null)}
+          onConfirm={confirmPlan}
+        />
+      )}
+
+      {/* MODAL: LOGIN */}
+      {modal === "login" && (
+        <LoginModal
+          onClose={() => setModal(null)}
+          onLogin={(u) => {
+            setUser(u);
+            flash("¡Bienvenido, " + u.nombre.split(" ")[0] + "! 🌿");
+            if (cart.length) setModal("checkout"); else setModal(null);
+          }}
+        />
+      )}
+
+      {/* MODAL: CUENTA */}
+      {modal === "cuenta" && user && (
+        <div className="modal">
+          <div className="overlay" onClick={() => setModal(null)} />
+          <div className="modal-card" style={{ position: "relative", zIndex: 1 }}>
+            <div className="modal-head">
+              <div>
+                <h2>Tu cuenta</h2>
+                <p>{user.email}</p>
+              </div>
+              <button className="x" onClick={() => setModal(null)}>×</button>
+            </div>
+            <div className="modal-body">
+              <div className="res">
+                <div><span>Nombre</span><b>{user.nombre}</b></div>
+                <div><span>Email</span><b>{user.email}</b></div>
+                <div><span>Plan activo</span><b>{cart.find(c=>c.type==="plan")?.nombre || "Sin plan aún"}</b></div>
+              </div>
+              <button className="pill-btn ghost" onClick={() => { setUser(null); setModal(null); flash("Sesión cerrada"); }}>
+                Cerrar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: CHECKOUT */}
+      {modal === "checkout" && (
+        <CheckoutModal
+          cart={cart}
+          totalEntrega={totalEntrega}
+          totalMensual={totalMensual}
+          user={user}
+          onClose={() => setModal(null)}
+          onDone={() => { setModal("done"); }}
+        />
+      )}
+
+      {/* MODAL: DONE */}
+      {modal === "done" && (
+        <div className="modal">
+          <div className="overlay" onClick={() => { setModal(null); setCart([]); }} />
+          <div className="modal-card" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+            <div className="modal-body">
+              <div className="ok-check">✓</div>
+              <h2 style={{ textAlign: "center" }}>¡Suscripción confirmada!</h2>
+              <p style={{ color: "var(--gris)", fontWeight: 600, marginTop: 10 }}>
+                Tu primera caja llega el próximo miércoles. Te mandamos el detalle y las recetas por email.
+              </p>
+              <button className="pill-btn" style={{ marginTop: 22 }} onClick={() => { setModal(null); setCart([]); }}>
+                Listo, gracias 🌿
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TOAST */}
+      {toast && <div className="toast">{toast}</div>}
+    </div>
+  );
+}
+
+// ---------- Banda sorpresa ----------
+function SorpresaBanda() {
+  const [i, setI] = useState(0);
+  const s = SORPRESAS[i];
+  return (
+    <div className="sorpresa">
+      <div>
+        <div className="kicker">El descubrimiento de la semana</div>
+        <h2>Un ingrediente nuevo, sin miedo a cocinarlo</h2>
+        <p>Cada caja trae un producto para descubrir, siempre con una explicación simple de cómo usarlo. Así nada queda olvidado en la heladera.</p>
+        <div className="rot">
+          {SORPRESAS.map((x, idx) => (
+            <button key={idx} className={idx === i ? "on" : ""} onClick={() => setI(idx)}>{x.n}</button>
+          ))}
+        </div>
+      </div>
+      <div className="sorpresa-card">
+        <div className="big">✨</div>
+        <b>{s.n}</b>
+        <small>{s.d}</small>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Modal elegir estilo + exclusiones ----------
+function PlanModal({ plan, estiloInit, onClose, onConfirm }) {
+  const [estilo, setEstilo] = useState(estiloInit);
+  const [exclu, setExclu] = useState([]);
+  const toggleEx = (p) =>
+    setExclu((e) => e.includes(p) ? e.filter((x) => x !== p) : e.length < 3 ? [...e, p] : e);
+
+  return (
+    <div className="modal">
+      <div className="overlay" onClick={onClose} />
+      <div className="modal-card" style={{ position: "relative", zIndex: 1 }}>
+        <div className="modal-head">
+          <div>
+            <h2>Plan {plan.nombre}</h2>
+            <p>{peso(plan.porEntrega)} / entrega · {peso(plan.mensual)} por mes</p>
+          </div>
+          <button className="x" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body">
+          <div className="field">
+            <label>1 · Estilo de tu caja</label>
+            <div className="chips">
+              {ESTILOS.map((e) => (
+                <button key={e.id} className={"chip" + (estilo === e.id ? " on" : "")} onClick={() => setEstilo(e.id)}>
+                  {e.emoji} {e.nombre}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="field">
+            <label>2 · ¿Algo que no querés recibir? <span style={{ fontWeight: 700, color: "var(--gris)" }}>(hasta 3, opcional)</span></label>
+            <div className="chips">
+              {EXCLUIBLES.map((p) => (
+                <button
+                  key={p}
+                  className={"chip small" + (exclu.includes(p) ? " on" : "")}
+                  onClick={() => toggleEx(p)}
+                  disabled={!exclu.includes(p) && exclu.length >= 3}
+                  style={!exclu.includes(p) && exclu.length >= 3 ? { opacity: .4, cursor: "not-allowed" } : null}
+                >
+                  {exclu.includes(p) ? "✕ " : ""}{p}
+                </button>
+              ))}
+            </div>
+          </div>
+          <button className="pill-btn" onClick={() => onConfirm(estilo, exclu)}>
+            Sumar al carrito · {peso(plan.porEntrega)}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Modal login suave ----------
+function LoginModal({ onClose, onLogin }) {
+  const [reg, setReg] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const ok = email.includes("@") && pass.length >= 4 && (!reg || nombre.trim());
+
+  const submit = () => {
+    if (!ok) return;
+    onLogin({ nombre: reg ? nombre : email.split("@")[0], email });
+  };
+
+  return (
+    <div className="modal">
+      <div className="overlay" onClick={onClose} />
+      <div className="modal-card" style={{ position: "relative", zIndex: 1 }}>
+        <div className="modal-head">
+          <div>
+            <h2>{reg ? "Creá tu cuenta" : "Ingresá"}</h2>
+            <p>{reg ? "Guardá tus preferencias y seguí tu suscripción." : "Bienvenido de nuevo a DeliFrut."}</p>
+          </div>
+          <button className="x" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body">
+          {reg && (
+            <div className="field">
+              <label>Nombre</label>
+              <input value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="María López" />
+            </div>
+          )}
+          <div className="field">
+            <label>Email</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="vos@email.com" />
+          </div>
+          <div className="field">
+            <label>Contraseña</label>
+            <input type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="Mínimo 4 caracteres" />
+          </div>
+          <button className="pill-btn" onClick={submit} disabled={!ok}
+            style={!ok ? { opacity: .5, cursor: "not-allowed" } : null}>
+            {reg ? "Crear cuenta y seguir" : "Ingresar"}
+          </button>
+          <div className="subtle">
+            {reg ? "¿Ya tenés cuenta? " : "¿Primera vez? "}
+            <a onClick={() => setReg(!reg)}>{reg ? "Ingresá" : "Creá tu cuenta"}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------- Modal checkout multi-paso ----------
+function CheckoutModal({ cart, totalEntrega, totalMensual, user, onClose, onDone }) {
+  const [step, setStep] = useState(0);
+  const [f, setF] = useState({
+    nombre: user?.nombre || "", tel: "",
+    edificio: EDIFICIOS[0], depto: "", otro: "",
+    dia: DIAS[0], franja: FRANJAS[2],
+    pago: "tarjeta", tarjeta: "", venc: "", cvv: "",
+  });
+  const set = (k, v) => setF((s) => ({ ...s, [k]: v }));
+
+  const step0ok = f.nombre.trim() && f.tel.trim() && f.depto.trim() && (f.edificio !== EDIFICIOS[4] || f.otro.trim());
+  const step1ok = f.dia && f.franja;
+  const step2ok = f.pago === "efectivo" || (f.tarjeta.replace(/\s/g, "").length >= 14 && f.venc && f.cvv.length >= 3);
+
+  const next = () => setStep((s) => s + 1);
+  const back = () => setStep((s) => s - 1);
+
+  return (
+    <div className="modal">
+      <div className="overlay" onClick={onClose} />
+      <div className="modal-card" style={{ position: "relative", zIndex: 1 }}>
+        <div className="modal-head">
+          <div>
+            <h2>Finalizar suscripción</h2>
+            <p>{["Datos de entrega", "Día y horario", "Pago y confirmación"][step]}</p>
+          </div>
+          <button className="x" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-body">
+          <div className="steps">
+            {[0, 1, 2].map((i) => <div key={i} className={"s" + (i <= step ? " on" : "")} />)}
+          </div>
+
+          {step === 0 && (
+            <>
+              <div className="field">
+                <label>Nombre y apellido</label>
+                <input value={f.nombre} onChange={(e) => set("nombre", e.target.value)} placeholder="María López" />
+              </div>
+              <div className="field">
+                <label>Teléfono</label>
+                <input value={f.tel} onChange={(e) => set("tel", e.target.value)} placeholder="351 123 4567" />
+              </div>
+              <div className="field">
+                <label>Edificio</label>
+                <select value={f.edificio} onChange={(e) => set("edificio", e.target.value)}>
+                  {EDIFICIOS.map((e) => <option key={e}>{e}</option>)}
+                </select>
+              </div>
+              {f.edificio === EDIFICIOS[4] && (
+                <div className="field">
+                  <label>Dirección del edificio</label>
+                  <input value={f.otro} onChange={(e) => set("otro", e.target.value)} placeholder="Calle y número" />
+                </div>
+              )}
+              <div className="field">
+                <label>Piso y departamento</label>
+                <input value={f.depto} onChange={(e) => set("depto", e.target.value)} placeholder="3º B" />
+              </div>
+              <button className="pill-btn" onClick={next} disabled={!step0ok}
+                style={!step0ok ? { opacity: .5, cursor: "not-allowed" } : null}>Continuar</button>
+            </>
+          )}
+
+          {step === 1 && (
+            <>
+              <div className="field">
+                <label>Día de entrega en tu edificio</label>
+                <div className="chips">
+                  {DIAS.map((d) => (
+                    <button key={d} className={"chip" + (f.dia === d ? " on" : "")} onClick={() => set("dia", d)}>{d}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="field">
+                <label>Franja horaria</label>
+                <div className="chips">
+                  {FRANJAS.map((fr) => (
+                    <button key={fr} className={"chip" + (f.franja === fr ? " on" : "")} onClick={() => set("franja", fr)}>{fr}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="res">
+                <div><span>💚 Entrega agrupada</span><b>Menos costo y emisiones</b></div>
+                <div><span>Tu edificio recibe</span><b>{f.dia}, {f.franja}</b></div>
+              </div>
+              <button className="pill-btn" onClick={next} disabled={!step1ok}>Continuar</button>
+              <button className="pill-btn ghost" onClick={back}>Volver</button>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <div className="field">
+                <label>Forma de pago</label>
+                <div className="chips">
+                  <button className={"chip" + (f.pago === "tarjeta" ? " on" : "")} onClick={() => set("pago", "tarjeta")}>💳 Tarjeta</button>
+                  <button className={"chip" + (f.pago === "efectivo" ? " on" : "")} onClick={() => set("pago", "efectivo")}>💵 Efectivo en entrega</button>
+                </div>
+              </div>
+              {f.pago === "tarjeta" && (
+                <>
+                  <div className="field">
+                    <label>Número de tarjeta</label>
+                    <input value={f.tarjeta} inputMode="numeric"
+                      onChange={(e) => set("tarjeta", e.target.value.replace(/[^\d ]/g, "").slice(0, 19))}
+                      placeholder="4509 0000 0000 0000" />
+                  </div>
+                  <div style={{ display: "flex", gap: 12 }}>
+                    <div className="field" style={{ flex: 1 }}>
+                      <label>Vencimiento</label>
+                      <input value={f.venc} onChange={(e) => set("venc", e.target.value.slice(0, 5))} placeholder="MM/AA" />
+                    </div>
+                    <div className="field" style={{ flex: 1 }}>
+                      <label>CVV</label>
+                      <input value={f.cvv} inputMode="numeric"
+                        onChange={(e) => set("cvv", e.target.value.replace(/\D/g, "").slice(0, 4))} placeholder="123" />
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="res">
+                <div><span>Por entrega</span><b>{peso(totalEntrega)}</b></div>
+                <div><span>Mensual · 4 entregas</span><b style={{ color: "var(--verde-osc)", fontSize: 16 }}>{peso(totalMensual)}</b></div>
+                <div><span>Primera entrega</span><b>{f.dia}, {f.franja}</b></div>
+              </div>
+              <button className="pill-btn" onClick={onDone} disabled={!step2ok}
+                style={!step2ok ? { opacity: .5, cursor: "not-allowed" } : null}>
+                Confirmar suscripción · {peso(totalMensual)}/mes
+              </button>
+              <button className="pill-btn ghost" onClick={back}>Volver</button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+</body>
+</html>
