@@ -13,9 +13,6 @@
 <body>
 <div id="root"></div>
 <script>
-const { useState, useMemo, useEffect, useRef } = React;
-
-import { jsxDEV as _jsxDEV, Fragment as _Fragment } from "react/jsx-dev-runtime";
 const {
   useState,
   useMemo,
@@ -522,620 +519,374 @@ function App() {
     setDrawer(false);
     setModal("checkout");
   };
-  return /*#__PURE__*/_jsxDEV("div", {
-    className: "df-root",
-    children: [/*#__PURE__*/_jsxDEV("style", {
-      children: `@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Nunito:wght@600;700;800;900&display=swap');`
-    }, void 0, false), /*#__PURE__*/_jsxDEV("style", {
-      children: CSS
-    }, void 0, false), /*#__PURE__*/_jsxDEV("nav", {
-      className: "nav",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "logo",
-        children: ["🥬 Deli", /*#__PURE__*/_jsxDEV("b", {
-          children: "Frut"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "nav-links",
-        children: [/*#__PURE__*/_jsxDEV("a", {
-          href: "#planes",
-          children: "Planes"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("a", {
-          href: "#estilos",
-          children: "Estilos de caja"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("a", {
-          href: "#como",
-          children: "Cómo funciona"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("a", {
-          href: "#extras",
-          children: "Extras"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "nav-spacer"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-        className: "nav-btn",
-        onClick: () => setModal(user ? "cuenta" : "login"),
-        children: user ? "Hola, " + user.nombre.split(" ")[0] : "Ingresar"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-        className: "cart-btn",
-        onClick: () => setDrawer(true),
-        children: ["🛒 Carrito", count > 0 && /*#__PURE__*/_jsxDEV("span", {
-          className: "cart-badge",
-          children: count
-        }, void 0, false)]
-      }, void 0, true)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("header", {
-      className: "hero",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "hero-bg"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-        className: "hero-grid",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("span", {
-            className: "eyebrow",
-            children: "🌱 Suscripción semanal · Córdoba"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("h1", {
-            children: ["La huerta llega ", /*#__PURE__*/_jsxDEV("em", {
-              children: "fresca"
-            }, void 0, false), " a tu edificio"]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("p", {
-            className: "lead",
-            children: "Elegís un plan y nosotros armamos la caja. Frutas y verduras de estación, recetas simples y un ingrediente sorpresa cada semana."
-          }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-            className: "hero-cta",
-            children: [/*#__PURE__*/_jsxDEV("button", {
-              className: "btn-main",
-              onClick: () => document.getElementById("planes").scrollIntoView({
-                behavior: "smooth"
-              }),
-              children: "Ver planes"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-              className: "btn-ghost",
-              onClick: () => document.getElementById("como").scrollIntoView({
-                behavior: "smooth"
-              }),
-              children: "Cómo funciona"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "hero-tags",
-            children: [/*#__PURE__*/_jsxDEV("span", {
-              className: "hero-tag",
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                className: "dot"
-              }, void 0, false), "Frescura garantizada"]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("span", {
-              className: "hero-tag",
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                className: "dot"
-              }, void 0, false), "Entrega por edificio"]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("span", {
-              className: "hero-tag",
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                className: "dot"
-              }, void 0, false), "Pausá cuando quieras"]
-            }, void 0, true)]
-          }, void 0, true)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "crate",
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "crate-top",
-            children: [/*#__PURE__*/_jsxDEV("b", {
-              children: "Tu caja de esta semana"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("span", {
-              className: "crate-chip",
-              children: "Miércoles 18–20 hs"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "veg-grid",
-            children: ["🥕", "🍅", "🥬", "🍎", "🥦", "🍊", "🫑", "🍆", "🥒", "🍐", "🌽", "✨"].map((v, i) => /*#__PURE__*/_jsxDEV("div", {
-              className: "veg" + (i === popIdx ? " pop" : ""),
-              children: v
-            }, i, false))
-          }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-            className: "crate-note",
-            children: "✨ Sorpresa de la semana: hinojo — suave y fresco, ideal en ensalada."
-          }, void 0, false)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("section", {
-      className: "sec",
-      id: "planes",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "sec-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "kicker",
-          children: "Elegí tu plan"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-          children: "Un plan, y listo"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-          children: "No comprás fruta por fruta. Elegís el tamaño de caja según cuántos son y nosotros la armamos fresca cada semana."
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "wrap",
-        children: /*#__PURE__*/_jsxDEV("div", {
-          className: "planes",
-          children: PLANES.map(p => /*#__PURE__*/_jsxDEV("div", {
-            className: "plan" + (p.destacado ? " top" : ""),
-            children: [p.destacado && /*#__PURE__*/_jsxDEV("span", {
-              className: "plan-flag",
-              children: "El más elegido"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("h3", {
-              children: p.nombre
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "lema",
-              children: p.lema
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "precio",
-              children: [/*#__PURE__*/_jsxDEV("b", {
-                children: peso(p.porEntrega)
-              }, void 0, false), /*#__PURE__*/_jsxDEV("span", {
-                children: "/ entrega"
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              className: "mensual",
-              children: [peso(p.mensual), " por mes · 4 entregas"]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("ul", {
-              children: p.items.map((it, i) => /*#__PURE__*/_jsxDEV("li", {
-                children: [/*#__PURE__*/_jsxDEV("span", {
-                  className: "tick",
-                  children: "✓"
-                }, void 0, false), it]
-              }, i, true))
-            }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-              className: "plan-btn",
-              onClick: () => openPlan(p),
-              children: ["Elegir ", p.nombre]
-            }, void 0, true)]
-          }, p.id, true))
-        }, void 0, false)
-      }, void 0, false)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("section", {
-      className: "sec",
-      id: "estilos",
-      style: {
-        background: "#F5FBEC"
-      },
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "sec-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "kicker",
-          children: "Personalizá sin complicarte"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-          children: "Elegí el estilo de tu caja"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-          children: "El mismo plan, con un enfoque distinto. Cambia el mix de la caja sin que tengas que elegir producto por producto."
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "wrap",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "estilos",
-          children: ESTILOS.map(e => /*#__PURE__*/_jsxDEV("button", {
-            className: "estilo" + (estiloSel === e.id ? " sel" : ""),
-            onClick: () => setEstiloSel(e.id),
-            children: [/*#__PURE__*/_jsxDEV("span", {
-              className: "mark",
-              children: "✓"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "emoji",
-              children: e.emoji
-            }, void 0, false), /*#__PURE__*/_jsxDEV("h3", {
-              children: e.nombre
-            }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-              children: e.desc
-            }, void 0, false)]
-          }, e.id, true))
-        }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-          style: {
-            textAlign: "center",
-            marginTop: 24,
-            color: "var(--gris)",
-            fontWeight: 700
-          },
-          children: ["Tu estilo elegido: ", /*#__PURE__*/_jsxDEV("b", {
-            style: {
-              color: "var(--verde-osc)"
-            },
-            children: ESTILOS.find(e => e.id === estiloSel).nombre
-          }, void 0, false), " — se aplica cuando sumás un plan."]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("section", {
-      className: "sec",
-      id: "como",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "sec-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "kicker",
-          children: "Simple de verdad"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-          children: "Cómo funciona"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "wrap",
-        children: /*#__PURE__*/_jsxDEV("div", {
-          className: "pasos",
-          children: [["Elegís tu plan", "Individual, Hogar o Familia según cuántos son en casa."], ["Definís el estilo", "Más frutas, para licuados, con niños… vos elegís el enfoque."], ["Recibís en tu edificio", "Día y franja fijos. Entregas agrupadas, menos costo y menos emisiones."], ["Cocinás fácil", "Recetario semanal y sorpresa con instrucciones para no desperdiciar."]].map((s, i) => /*#__PURE__*/_jsxDEV("div", {
-            className: "paso",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              className: "num",
-              children: String(i + 1).padStart(2, "0")
-            }, void 0, false), /*#__PURE__*/_jsxDEV("h3", {
-              children: s[0]
-            }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-              children: s[1]
-            }, void 0, false)]
-          }, i, true))
-        }, void 0, false)
-      }, void 0, false)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("section", {
-      className: "sec",
-      children: /*#__PURE__*/_jsxDEV("div", {
-        className: "wrap",
-        children: /*#__PURE__*/_jsxDEV(SorpresaBanda, {}, void 0, false)
-      }, void 0, false)
-    }, void 0, false), /*#__PURE__*/_jsxDEV("section", {
-      className: "sec",
-      id: "extras",
-      style: {
-        background: "#F5FBEC"
-      },
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "sec-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "kicker",
-          children: "Sumá lo que quieras"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-          children: "Complementos"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-          children: "Agregá extras a tu caja con un toque. Se suman a tu suscripción y llegan el mismo día."
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "wrap",
-        children: /*#__PURE__*/_jsxDEV("div", {
-          className: "comps",
-          children: COMPLEMENTOS.map(c => {
-            const inCart = cart.some(x => x.key === "comp-" + c.id);
-            return /*#__PURE__*/_jsxDEV("div", {
-              className: "comp" + (inCart ? " in" : ""),
-              children: [/*#__PURE__*/_jsxDEV("div", {
-                className: "emoji",
-                children: c.emoji
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: c.nombre
-              }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-                className: "u",
-                children: c.u
-              }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-                className: "pr",
-                children: peso(c.precio)
-              }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-                className: "add",
-                onClick: () => addComp(c),
-                children: inCart ? "Sumar otro +" : "Agregar"
-              }, void 0, false)]
-            }, c.id, true);
-          })
-        }, void 0, false)
-      }, void 0, false)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("footer", {
-      className: "foot",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "foot-grid",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "logo",
-            children: ["🥬 Deli", /*#__PURE__*/_jsxDEV("b", {
-              children: "Frut"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("p", {
-            children: "Suscripción semanal de frutas y verduras frescas para quienes viven en edificios. Más variedad, menos desperdicio."
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("h4", {
-            children: "Servicio"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("ul", {
-            children: [/*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#planes",
-                children: "Planes"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#estilos",
-                children: "Estilos de caja"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#extras",
-                children: "Complementos"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#como",
-                children: "Cómo funciona"
-              }, void 0, false)
-            }, void 0, false)]
-          }, void 0, true)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("h4", {
-            children: "Confianza"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("ul", {
-            children: [/*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#",
-                children: "Garantía Frescura Total"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#",
-                children: "Sustentabilidad"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#",
-                children: "Embajador del edificio"
-              }, void 0, false)
-            }, void 0, false), /*#__PURE__*/_jsxDEV("li", {
-              children: /*#__PURE__*/_jsxDEV("a", {
-                href: "#",
-                children: "Contacto"
-              }, void 0, false)
-            }, void 0, false)]
-          }, void 0, true)]
-        }, void 0, true)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "foot-base",
-        children: "© 2026 DeliFrut · Córdoba, Argentina · Hecho con productos de estación"
-      }, void 0, false)]
-    }, void 0, true), drawer && /*#__PURE__*/_jsxDEV(_Fragment, {
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "overlay",
-        onClick: () => setDrawer(false)
-      }, void 0, false), /*#__PURE__*/_jsxDEV("aside", {
-        className: "drawer",
-        role: "dialog",
-        "aria-label": "Carrito",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "drawer-head",
-          children: [/*#__PURE__*/_jsxDEV("h3", {
-            children: "Tu carrito"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-            className: "x",
-            onClick: () => setDrawer(false),
-            "aria-label": "Cerrar",
-            children: "×"
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "drawer-body",
-          children: !cart.length ? /*#__PURE__*/_jsxDEV("div", {
-            className: "empty",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              className: "big",
-              children: "🧺"
-            }, void 0, false), "Tu caja está vacía.", /*#__PURE__*/_jsxDEV("br", {}, void 0, false), "Elegí un plan para empezar."]
-          }, void 0, true) : cart.map(l => /*#__PURE__*/_jsxDEV("div", {
-            className: "line",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              className: "ico",
-              children: l.ico
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "info",
-              children: [/*#__PURE__*/_jsxDEV("b", {
-                children: l.nombre
-              }, void 0, false), /*#__PURE__*/_jsxDEV("small", {
-                children: l.type === "plan" ? "Estilo: " + l.estilo : l.estilo
-              }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-                className: "qty",
-                children: [/*#__PURE__*/_jsxDEV("button", {
-                  onClick: () => setQty(l.key, -1),
-                  children: "−"
-                }, void 0, false), /*#__PURE__*/_jsxDEV("span", {
-                  children: l.qty
-                }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-                  onClick: () => setQty(l.key, 1),
-                  children: "+"
-                }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-                  className: "rm",
-                  onClick: () => removeLine(l.key),
-                  children: "Quitar"
-                }, void 0, false)]
-              }, void 0, true)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              className: "pr",
-              children: peso(l.precio * l.qty)
-            }, void 0, false)]
-          }, l.key, true))
-        }, void 0, false), cart.length > 0 && /*#__PURE__*/_jsxDEV("div", {
-          className: "drawer-foot",
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "tot",
-            children: [/*#__PURE__*/_jsxDEV("span", {
-              children: "Por entrega"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("span", {
-              children: peso(totalEntrega)
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "tot big",
-            children: [/*#__PURE__*/_jsxDEV("span", {
-              children: "Mensual (4 entregas)"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-              children: peso(totalMensual)
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "co-btn",
-            onClick: goCheckout,
-            children: "Ir a pagar"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-            className: "mini",
-            children: "Podés pausar o cancelar tu suscripción cuando quieras."
-          }, void 0, false)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true), modal === "plan" && planPend && /*#__PURE__*/_jsxDEV(PlanModal, {
-      plan: planPend,
-      estiloInit: estiloSel,
-      onClose: () => setModal(null),
-      onConfirm: confirmPlan
-    }, void 0, false), modal === "login" && /*#__PURE__*/_jsxDEV(LoginModal, {
-      onClose: () => setModal(null),
-      onLogin: u => {
-        setUser(u);
-        flash("¡Bienvenido, " + u.nombre.split(" ")[0] + "! 🌿");
-        if (cart.length) setModal("checkout");else setModal(null);
-      }
-    }, void 0, false), modal === "cuenta" && user && /*#__PURE__*/_jsxDEV("div", {
-      className: "modal",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "overlay",
-        onClick: () => setModal(null)
-      }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-        className: "modal-card",
-        style: {
-          position: "relative",
-          zIndex: 1
-        },
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "modal-head",
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            children: [/*#__PURE__*/_jsxDEV("h2", {
-              children: "Tu cuenta"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-              children: user.email
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "x",
-            onClick: () => setModal(null),
-            children: "×"
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "modal-body",
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "res",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Nombre"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: user.nombre
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Email"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: user.email
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Plan activo"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: cart.find(c => c.type === "plan")?.nombre || "Sin plan aún"
-              }, void 0, false)]
-            }, void 0, true)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn ghost",
-            onClick: () => {
-              setUser(null);
-              setModal(null);
-              flash("Sesión cerrada");
-            },
-            children: "Cerrar sesión"
-          }, void 0, false)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true), modal === "checkout" && /*#__PURE__*/_jsxDEV(CheckoutModal, {
-      cart: cart,
-      totalEntrega: totalEntrega,
-      totalMensual: totalMensual,
-      user: user,
-      onClose: () => setModal(null),
-      onDone: () => {
-        setModal("done");
-      }
-    }, void 0, false), modal === "done" && /*#__PURE__*/_jsxDEV("div", {
-      className: "modal",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "overlay",
-        onClick: () => {
-          setModal(null);
-          setCart([]);
-        }
-      }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-        className: "modal-card",
-        style: {
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center"
-        },
-        children: /*#__PURE__*/_jsxDEV("div", {
-          className: "modal-body",
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "ok-check",
-            children: "✓"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-            style: {
-              textAlign: "center"
-            },
-            children: "¡Suscripción confirmada!"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-            style: {
-              color: "var(--gris)",
-              fontWeight: 600,
-              marginTop: 10
-            },
-            children: "Tu primera caja llega el próximo miércoles. Te mandamos el detalle y las recetas por email."
-          }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn",
-            style: {
-              marginTop: 22
-            },
-            onClick: () => {
-              setModal(null);
-              setCart([]);
-            },
-            children: "Listo, gracias 🌿"
-          }, void 0, false)]
-        }, void 0, true)
-      }, void 0, false)]
-    }, void 0, true), toast && /*#__PURE__*/_jsxDEV("div", {
-      className: "toast",
-      children: toast
-    }, void 0, false)]
-  }, void 0, true);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "df-root"
+  }, /*#__PURE__*/React.createElement("style", null, `@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=Nunito:wght@600;700;800;900&display=swap');`), /*#__PURE__*/React.createElement("style", null, CSS), /*#__PURE__*/React.createElement("nav", {
+    className: "nav"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "logo"
+  }, "🥬 Deli", /*#__PURE__*/React.createElement("b", null, "Frut")), /*#__PURE__*/React.createElement("div", {
+    className: "nav-links"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "#planes"
+  }, "Planes"), /*#__PURE__*/React.createElement("a", {
+    href: "#estilos"
+  }, "Estilos de caja"), /*#__PURE__*/React.createElement("a", {
+    href: "#como"
+  }, "Cómo funciona"), /*#__PURE__*/React.createElement("a", {
+    href: "#extras"
+  }, "Extras")), /*#__PURE__*/React.createElement("div", {
+    className: "nav-spacer"
+  }), /*#__PURE__*/React.createElement("button", {
+    className: "nav-btn",
+    onClick: () => setModal(user ? "cuenta" : "login")
+  }, user ? "Hola, " + user.nombre.split(" ")[0] : "Ingresar"), /*#__PURE__*/React.createElement("button", {
+    className: "cart-btn",
+    onClick: () => setDrawer(true)
+  }, "🛒 Carrito", count > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "cart-badge"
+  }, count))), /*#__PURE__*/React.createElement("header", {
+    className: "hero"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hero-bg"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "hero-grid"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow"
+  }, "🌱 Suscripción semanal · Córdoba"), /*#__PURE__*/React.createElement("h1", null, "La huerta llega ", /*#__PURE__*/React.createElement("em", null, "fresca"), " a tu edificio"), /*#__PURE__*/React.createElement("p", {
+    className: "lead"
+  }, "Elegís un plan y nosotros armamos la caja. Frutas y verduras de estación, recetas simples y un ingrediente sorpresa cada semana."), /*#__PURE__*/React.createElement("div", {
+    className: "hero-cta"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn-main",
+    onClick: () => document.getElementById("planes").scrollIntoView({
+      behavior: "smooth"
+    })
+  }, "Ver planes"), /*#__PURE__*/React.createElement("button", {
+    className: "btn-ghost",
+    onClick: () => document.getElementById("como").scrollIntoView({
+      behavior: "smooth"
+    })
+  }, "Cómo funciona")), /*#__PURE__*/React.createElement("div", {
+    className: "hero-tags"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hero-tag"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dot"
+  }), "Frescura garantizada"), /*#__PURE__*/React.createElement("span", {
+    className: "hero-tag"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dot"
+  }), "Entrega por edificio"), /*#__PURE__*/React.createElement("span", {
+    className: "hero-tag"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dot"
+  }), "Pausá cuando quieras"))), /*#__PURE__*/React.createElement("div", {
+    className: "crate"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "crate-top"
+  }, /*#__PURE__*/React.createElement("b", null, "Tu caja de esta semana"), /*#__PURE__*/React.createElement("span", {
+    className: "crate-chip"
+  }, "Miércoles 18–20 hs")), /*#__PURE__*/React.createElement("div", {
+    className: "veg-grid"
+  }, ["🥕", "🍅", "🥬", "🍎", "🥦", "🍊", "🫑", "🍆", "🥒", "🍐", "🌽", "✨"].map((v, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "veg" + (i === popIdx ? " pop" : "")
+  }, v))), /*#__PURE__*/React.createElement("div", {
+    className: "crate-note"
+  }, "✨ Sorpresa de la semana: hinojo — suave y fresco, ideal en ensalada.")))), /*#__PURE__*/React.createElement("section", {
+    className: "sec",
+    id: "planes"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sec-head"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kicker"
+  }, "Elegí tu plan"), /*#__PURE__*/React.createElement("h2", null, "Un plan, y listo"), /*#__PURE__*/React.createElement("p", null, "No comprás fruta por fruta. Elegís el tamaño de caja según cuántos son y nosotros la armamos fresca cada semana.")), /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "planes"
+  }, PLANES.map(p => /*#__PURE__*/React.createElement("div", {
+    key: p.id,
+    className: "plan" + (p.destacado ? " top" : "")
+  }, p.destacado && /*#__PURE__*/React.createElement("span", {
+    className: "plan-flag"
+  }, "El más elegido"), /*#__PURE__*/React.createElement("h3", null, p.nombre), /*#__PURE__*/React.createElement("div", {
+    className: "lema"
+  }, p.lema), /*#__PURE__*/React.createElement("div", {
+    className: "precio"
+  }, /*#__PURE__*/React.createElement("b", null, peso(p.porEntrega)), /*#__PURE__*/React.createElement("span", null, "/ entrega")), /*#__PURE__*/React.createElement("div", {
+    className: "mensual"
+  }, peso(p.mensual), " por mes · 4 entregas"), /*#__PURE__*/React.createElement("ul", null, p.items.map((it, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "tick"
+  }, "✓"), it))), /*#__PURE__*/React.createElement("button", {
+    className: "plan-btn",
+    onClick: () => openPlan(p)
+  }, "Elegir ", p.nombre)))))), /*#__PURE__*/React.createElement("section", {
+    className: "sec",
+    id: "estilos",
+    style: {
+      background: "#F5FBEC"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sec-head"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kicker"
+  }, "Personalizá sin complicarte"), /*#__PURE__*/React.createElement("h2", null, "Elegí el estilo de tu caja"), /*#__PURE__*/React.createElement("p", null, "El mismo plan, con un enfoque distinto. Cambia el mix de la caja sin que tengas que elegir producto por producto.")), /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "estilos"
+  }, ESTILOS.map(e => /*#__PURE__*/React.createElement("button", {
+    key: e.id,
+    className: "estilo" + (estiloSel === e.id ? " sel" : ""),
+    onClick: () => setEstiloSel(e.id)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mark"
+  }, "✓"), /*#__PURE__*/React.createElement("div", {
+    className: "emoji"
+  }, e.emoji), /*#__PURE__*/React.createElement("h3", null, e.nombre), /*#__PURE__*/React.createElement("p", null, e.desc)))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      textAlign: "center",
+      marginTop: 24,
+      color: "var(--gris)",
+      fontWeight: 700
+    }
+  }, "Tu estilo elegido: ", /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "var(--verde-osc)"
+    }
+  }, ESTILOS.find(e => e.id === estiloSel).nombre), " — se aplica cuando sumás un plan."))), /*#__PURE__*/React.createElement("section", {
+    className: "sec",
+    id: "como"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sec-head"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kicker"
+  }, "Simple de verdad"), /*#__PURE__*/React.createElement("h2", null, "Cómo funciona")), /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pasos"
+  }, [["Elegís tu plan", "Individual, Hogar o Familia según cuántos son en casa."], ["Definís el estilo", "Más frutas, para licuados, con niños… vos elegís el enfoque."], ["Recibís en tu edificio", "Día y franja fijos. Entregas agrupadas, menos costo y menos emisiones."], ["Cocinás fácil", "Recetario semanal y sorpresa con instrucciones para no desperdiciar."]].map((s, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "paso"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "num"
+  }, String(i + 1).padStart(2, "0")), /*#__PURE__*/React.createElement("h3", null, s[0]), /*#__PURE__*/React.createElement("p", null, s[1])))))), /*#__PURE__*/React.createElement("section", {
+    className: "sec"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement(SorpresaBanda, null))), /*#__PURE__*/React.createElement("section", {
+    className: "sec",
+    id: "extras",
+    style: {
+      background: "#F5FBEC"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "sec-head"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "kicker"
+  }, "Sumá lo que quieras"), /*#__PURE__*/React.createElement("h2", null, "Complementos"), /*#__PURE__*/React.createElement("p", null, "Agregá extras a tu caja con un toque. Se suman a tu suscripción y llegan el mismo día.")), /*#__PURE__*/React.createElement("div", {
+    className: "wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "comps"
+  }, COMPLEMENTOS.map(c => {
+    const inCart = cart.some(x => x.key === "comp-" + c.id);
+    return /*#__PURE__*/React.createElement("div", {
+      key: c.id,
+      className: "comp" + (inCart ? " in" : "")
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "emoji"
+    }, c.emoji), /*#__PURE__*/React.createElement("b", null, c.nombre), /*#__PURE__*/React.createElement("div", {
+      className: "u"
+    }, c.u), /*#__PURE__*/React.createElement("div", {
+      className: "pr"
+    }, peso(c.precio)), /*#__PURE__*/React.createElement("button", {
+      className: "add",
+      onClick: () => addComp(c)
+    }, inCart ? "Sumar otro +" : "Agregar"));
+  })))), /*#__PURE__*/React.createElement("footer", {
+    className: "foot"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "foot-grid"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "logo"
+  }, "🥬 Deli", /*#__PURE__*/React.createElement("b", null, "Frut")), /*#__PURE__*/React.createElement("p", null, "Suscripción semanal de frutas y verduras frescas para quienes viven en edificios. Más variedad, menos desperdicio.")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", null, "Servicio"), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#planes"
+  }, "Planes")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#estilos"
+  }, "Estilos de caja")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#extras"
+  }, "Complementos")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#como"
+  }, "Cómo funciona")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h4", null, "Confianza"), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#"
+  }, "Garantía Frescura Total")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#"
+  }, "Sustentabilidad")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#"
+  }, "Embajador del edificio")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "#"
+  }, "Contacto"))))), /*#__PURE__*/React.createElement("div", {
+    className: "foot-base"
+  }, "© 2026 DeliFrut · Córdoba, Argentina · Hecho con productos de estación")), drawer && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: () => setDrawer(false)
+  }), /*#__PURE__*/React.createElement("aside", {
+    className: "drawer",
+    role: "dialog",
+    "aria-label": "Carrito"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "drawer-head"
+  }, /*#__PURE__*/React.createElement("h3", null, "Tu carrito"), /*#__PURE__*/React.createElement("button", {
+    className: "x",
+    onClick: () => setDrawer(false),
+    "aria-label": "Cerrar"
+  }, "×")), /*#__PURE__*/React.createElement("div", {
+    className: "drawer-body"
+  }, !cart.length ? /*#__PURE__*/React.createElement("div", {
+    className: "empty"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "big"
+  }, "🧺"), "Tu caja está vacía.", /*#__PURE__*/React.createElement("br", null), "Elegí un plan para empezar.") : cart.map(l => /*#__PURE__*/React.createElement("div", {
+    key: l.key,
+    className: "line"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ico"
+  }, l.ico), /*#__PURE__*/React.createElement("div", {
+    className: "info"
+  }, /*#__PURE__*/React.createElement("b", null, l.nombre), /*#__PURE__*/React.createElement("small", null, l.type === "plan" ? "Estilo: " + l.estilo : l.estilo), /*#__PURE__*/React.createElement("div", {
+    className: "qty"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setQty(l.key, -1)
+  }, "−"), /*#__PURE__*/React.createElement("span", null, l.qty), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setQty(l.key, 1)
+  }, "+"), /*#__PURE__*/React.createElement("button", {
+    className: "rm",
+    onClick: () => removeLine(l.key)
+  }, "Quitar"))), /*#__PURE__*/React.createElement("div", {
+    className: "pr"
+  }, peso(l.precio * l.qty))))), cart.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "drawer-foot"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "tot"
+  }, /*#__PURE__*/React.createElement("span", null, "Por entrega"), /*#__PURE__*/React.createElement("span", null, peso(totalEntrega))), /*#__PURE__*/React.createElement("div", {
+    className: "tot big"
+  }, /*#__PURE__*/React.createElement("span", null, "Mensual (4 entregas)"), /*#__PURE__*/React.createElement("b", null, peso(totalMensual))), /*#__PURE__*/React.createElement("button", {
+    className: "co-btn",
+    onClick: goCheckout
+  }, "Ir a pagar"), /*#__PURE__*/React.createElement("div", {
+    className: "mini"
+  }, "Podés pausar o cancelar tu suscripción cuando quieras.")))), modal === "plan" && planPend && /*#__PURE__*/React.createElement(PlanModal, {
+    plan: planPend,
+    estiloInit: estiloSel,
+    onClose: () => setModal(null),
+    onConfirm: confirmPlan
+  }), modal === "login" && /*#__PURE__*/React.createElement(LoginModal, {
+    onClose: () => setModal(null),
+    onLogin: u => {
+      setUser(u);
+      flash("¡Bienvenido, " + u.nombre.split(" ")[0] + "! 🌿");
+      if (cart.length) setModal("checkout");else setModal(null);
+    }
+  }), modal === "cuenta" && user && /*#__PURE__*/React.createElement("div", {
+    className: "modal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: () => setModal(null)
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "modal-card",
+    style: {
+      position: "relative",
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-head"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Tu cuenta"), /*#__PURE__*/React.createElement("p", null, user.email)), /*#__PURE__*/React.createElement("button", {
+    className: "x",
+    onClick: () => setModal(null)
+  }, "×")), /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "res"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Nombre"), /*#__PURE__*/React.createElement("b", null, user.nombre)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Email"), /*#__PURE__*/React.createElement("b", null, user.email)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Plan activo"), /*#__PURE__*/React.createElement("b", null, cart.find(c => c.type === "plan")?.nombre || "Sin plan aún"))), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn ghost",
+    onClick: () => {
+      setUser(null);
+      setModal(null);
+      flash("Sesión cerrada");
+    }
+  }, "Cerrar sesión")))), modal === "checkout" && /*#__PURE__*/React.createElement(CheckoutModal, {
+    cart: cart,
+    totalEntrega: totalEntrega,
+    totalMensual: totalMensual,
+    user: user,
+    onClose: () => setModal(null),
+    onDone: () => {
+      setModal("done");
+    }
+  }), modal === "done" && /*#__PURE__*/React.createElement("div", {
+    className: "modal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: () => {
+      setModal(null);
+      setCart([]);
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "modal-card",
+    style: {
+      position: "relative",
+      zIndex: 1,
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ok-check"
+  }, "✓"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      textAlign: "center"
+    }
+  }, "¡Suscripción confirmada!"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      color: "var(--gris)",
+      fontWeight: 600,
+      marginTop: 10
+    }
+  }, "Tu primera caja llega el próximo miércoles. Te mandamos el detalle y las recetas por email."), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    style: {
+      marginTop: 22
+    },
+    onClick: () => {
+      setModal(null);
+      setCart([]);
+    }
+  }, "Listo, gracias 🌿")))), toast && /*#__PURE__*/React.createElement("div", {
+    className: "toast"
+  }, toast));
 }
 
 // ---------- Banda sorpresa ----------
 function SorpresaBanda() {
   const [i, setI] = useState(0);
   const s = SORPRESAS[i];
-  return /*#__PURE__*/_jsxDEV("div", {
-    className: "sorpresa",
-    children: [/*#__PURE__*/_jsxDEV("div", {
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "kicker",
-        children: "El descubrimiento de la semana"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("h2", {
-        children: "Un ingrediente nuevo, sin miedo a cocinarlo"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-        children: "Cada caja trae un producto para descubrir, siempre con una explicación simple de cómo usarlo. Así nada queda olvidado en la heladera."
-      }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-        className: "rot",
-        children: SORPRESAS.map((x, idx) => /*#__PURE__*/_jsxDEV("button", {
-          className: idx === i ? "on" : "",
-          onClick: () => setI(idx),
-          children: x.n
-        }, idx, false))
-      }, void 0, false)]
-    }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-      className: "sorpresa-card",
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "big",
-        children: "✨"
-      }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-        children: s.n
-      }, void 0, false), /*#__PURE__*/_jsxDEV("small", {
-        children: s.d
-      }, void 0, false)]
-    }, void 0, true)]
-  }, void 0, true);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "sorpresa"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "kicker"
+  }, "El descubrimiento de la semana"), /*#__PURE__*/React.createElement("h2", null, "Un ingrediente nuevo, sin miedo a cocinarlo"), /*#__PURE__*/React.createElement("p", null, "Cada caja trae un producto para descubrir, siempre con una explicación simple de cómo usarlo. Así nada queda olvidado en la heladera."), /*#__PURE__*/React.createElement("div", {
+    className: "rot"
+  }, SORPRESAS.map((x, idx) => /*#__PURE__*/React.createElement("button", {
+    key: idx,
+    className: idx === i ? "on" : "",
+    onClick: () => setI(idx)
+  }, x.n)))), /*#__PURE__*/React.createElement("div", {
+    className: "sorpresa-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "big"
+  }, "✨"), /*#__PURE__*/React.createElement("b", null, s.n), /*#__PURE__*/React.createElement("small", null, s.d)));
 }
 
 // ---------- Modal elegir estilo + exclusiones ----------
@@ -1148,75 +899,54 @@ function PlanModal({
   const [estilo, setEstilo] = useState(estiloInit);
   const [exclu, setExclu] = useState([]);
   const toggleEx = p => setExclu(e => e.includes(p) ? e.filter(x => x !== p) : e.length < 3 ? [...e, p] : e);
-  return /*#__PURE__*/_jsxDEV("div", {
-    className: "modal",
-    children: [/*#__PURE__*/_jsxDEV("div", {
-      className: "overlay",
-      onClick: onClose
-    }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-      className: "modal-card",
-      style: {
-        position: "relative",
-        zIndex: 1
-      },
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "modal-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("h2", {
-            children: ["Plan ", plan.nombre]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("p", {
-            children: [peso(plan.porEntrega), " / entrega · ", peso(plan.mensual), " por mes"]
-          }, void 0, true)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-          className: "x",
-          onClick: onClose,
-          children: "×"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "modal-body",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "field",
-          children: [/*#__PURE__*/_jsxDEV("label", {
-            children: "1 · Estilo de tu caja"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-            className: "chips",
-            children: ESTILOS.map(e => /*#__PURE__*/_jsxDEV("button", {
-              className: "chip" + (estilo === e.id ? " on" : ""),
-              onClick: () => setEstilo(e.id),
-              children: [e.emoji, " ", e.nombre]
-            }, e.id, true))
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "field",
-          children: [/*#__PURE__*/_jsxDEV("label", {
-            children: ["2 · ¿Algo que no querés recibir? ", /*#__PURE__*/_jsxDEV("span", {
-              style: {
-                fontWeight: 700,
-                color: "var(--gris)"
-              },
-              children: "(hasta 3, opcional)"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "chips",
-            children: EXCLUIBLES.map(p => /*#__PURE__*/_jsxDEV("button", {
-              className: "chip small" + (exclu.includes(p) ? " on" : ""),
-              onClick: () => toggleEx(p),
-              disabled: !exclu.includes(p) && exclu.length >= 3,
-              style: !exclu.includes(p) && exclu.length >= 3 ? {
-                opacity: .4,
-                cursor: "not-allowed"
-              } : null,
-              children: [exclu.includes(p) ? "✕ " : "", p]
-            }, p, true))
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-          className: "pill-btn",
-          onClick: () => onConfirm(estilo, exclu),
-          children: ["Sumar al carrito · ", peso(plan.porEntrega)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true)]
-  }, void 0, true);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: onClose
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "modal-card",
+    style: {
+      position: "relative",
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-head"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Plan ", plan.nombre), /*#__PURE__*/React.createElement("p", null, peso(plan.porEntrega), " / entrega · ", peso(plan.mensual), " por mes")), /*#__PURE__*/React.createElement("button", {
+    className: "x",
+    onClick: onClose
+  }, "×")), /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "1 · Estilo de tu caja"), /*#__PURE__*/React.createElement("div", {
+    className: "chips"
+  }, ESTILOS.map(e => /*#__PURE__*/React.createElement("button", {
+    key: e.id,
+    className: "chip" + (estilo === e.id ? " on" : ""),
+    onClick: () => setEstilo(e.id)
+  }, e.emoji, " ", e.nombre)))), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "2 · ¿Algo que no querés recibir? ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: "var(--gris)"
+    }
+  }, "(hasta 3, opcional)")), /*#__PURE__*/React.createElement("div", {
+    className: "chips"
+  }, EXCLUIBLES.map(p => /*#__PURE__*/React.createElement("button", {
+    key: p,
+    className: "chip small" + (exclu.includes(p) ? " on" : ""),
+    onClick: () => toggleEx(p),
+    disabled: !exclu.includes(p) && exclu.length >= 3,
+    style: !exclu.includes(p) && exclu.length >= 3 ? {
+      opacity: .4,
+      cursor: "not-allowed"
+    } : null
+  }, exclu.includes(p) ? "✕ " : "", p)))), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    onClick: () => onConfirm(estilo, exclu)
+  }, "Sumar al carrito · ", peso(plan.porEntrega)))));
 }
 
 // ---------- Modal login suave ----------
@@ -1236,80 +966,57 @@ function LoginModal({
       email
     });
   };
-  return /*#__PURE__*/_jsxDEV("div", {
-    className: "modal",
-    children: [/*#__PURE__*/_jsxDEV("div", {
-      className: "overlay",
-      onClick: onClose
-    }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-      className: "modal-card",
-      style: {
-        position: "relative",
-        zIndex: 1
-      },
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "modal-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("h2", {
-            children: reg ? "Creá tu cuenta" : "Ingresá"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-            children: reg ? "Guardá tus preferencias y seguí tu suscripción." : "Bienvenido de nuevo a DeliFrut."
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-          className: "x",
-          onClick: onClose,
-          children: "×"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "modal-body",
-        children: [reg && /*#__PURE__*/_jsxDEV("div", {
-          className: "field",
-          children: [/*#__PURE__*/_jsxDEV("label", {
-            children: "Nombre"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-            value: nombre,
-            onChange: e => setNombre(e.target.value),
-            placeholder: "María López"
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "field",
-          children: [/*#__PURE__*/_jsxDEV("label", {
-            children: "Email"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-            type: "email",
-            value: email,
-            onChange: e => setEmail(e.target.value),
-            placeholder: "vos@email.com"
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-          className: "field",
-          children: [/*#__PURE__*/_jsxDEV("label", {
-            children: "Contraseña"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-            type: "password",
-            value: pass,
-            onChange: e => setPass(e.target.value),
-            placeholder: "Mínimo 4 caracteres"
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-          className: "pill-btn",
-          onClick: submit,
-          disabled: !ok,
-          style: !ok ? {
-            opacity: .5,
-            cursor: "not-allowed"
-          } : null,
-          children: reg ? "Crear cuenta y seguir" : "Ingresar"
-        }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-          className: "subtle",
-          children: [reg ? "¿Ya tenés cuenta? " : "¿Primera vez? ", /*#__PURE__*/_jsxDEV("a", {
-            onClick: () => setReg(!reg),
-            children: reg ? "Ingresá" : "Creá tu cuenta"
-          }, void 0, false)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true)]
-  }, void 0, true);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: onClose
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "modal-card",
+    style: {
+      position: "relative",
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-head"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, reg ? "Creá tu cuenta" : "Ingresá"), /*#__PURE__*/React.createElement("p", null, reg ? "Guardá tus preferencias y seguí tu suscripción." : "Bienvenido de nuevo a DeliFrut.")), /*#__PURE__*/React.createElement("button", {
+    className: "x",
+    onClick: onClose
+  }, "×")), /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, reg && /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Nombre"), /*#__PURE__*/React.createElement("input", {
+    value: nombre,
+    onChange: e => setNombre(e.target.value),
+    placeholder: "María López"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Email"), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    placeholder: "vos@email.com"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Contraseña"), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    value: pass,
+    onChange: e => setPass(e.target.value),
+    placeholder: "Mínimo 4 caracteres"
+  })), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    onClick: submit,
+    disabled: !ok,
+    style: !ok ? {
+      opacity: .5,
+      cursor: "not-allowed"
+    } : null
+  }, reg ? "Crear cuenta y seguir" : "Ingresar"), /*#__PURE__*/React.createElement("div", {
+    className: "subtle"
+  }, reg ? "¿Ya tenés cuenta? " : "¿Primera vez? ", /*#__PURE__*/React.createElement("a", {
+    onClick: () => setReg(!reg)
+  }, reg ? "Ingresá" : "Creá tu cuenta")))));
 }
 
 // ---------- Modal checkout multi-paso ----------
@@ -1344,257 +1051,156 @@ function CheckoutModal({
   const step2ok = f.pago === "efectivo" || f.tarjeta.replace(/\s/g, "").length >= 14 && f.venc && f.cvv.length >= 3;
   const next = () => setStep(s => s + 1);
   const back = () => setStep(s => s - 1);
-  return /*#__PURE__*/_jsxDEV("div", {
-    className: "modal",
-    children: [/*#__PURE__*/_jsxDEV("div", {
-      className: "overlay",
-      onClick: onClose
-    }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-      className: "modal-card",
-      style: {
-        position: "relative",
-        zIndex: 1
-      },
-      children: [/*#__PURE__*/_jsxDEV("div", {
-        className: "modal-head",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          children: [/*#__PURE__*/_jsxDEV("h2", {
-            children: "Finalizar suscripción"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("p", {
-            children: ["Datos de entrega", "Día y horario", "Pago y confirmación"][step]
-          }, void 0, false)]
-        }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-          className: "x",
-          onClick: onClose,
-          children: "×"
-        }, void 0, false)]
-      }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-        className: "modal-body",
-        children: [/*#__PURE__*/_jsxDEV("div", {
-          className: "steps",
-          children: [0, 1, 2].map(i => /*#__PURE__*/_jsxDEV("div", {
-            className: "s" + (i <= step ? " on" : "")
-          }, i, false))
-        }, void 0, false), step === 0 && /*#__PURE__*/_jsxDEV(_Fragment, {
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Nombre y apellido"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-              value: f.nombre,
-              onChange: e => set("nombre", e.target.value),
-              placeholder: "María López"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Teléfono"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-              value: f.tel,
-              onChange: e => set("tel", e.target.value),
-              placeholder: "351 123 4567"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Edificio"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("select", {
-              value: f.edificio,
-              onChange: e => set("edificio", e.target.value),
-              children: EDIFICIOS.map(e => /*#__PURE__*/_jsxDEV("option", {
-                children: e
-              }, e, false))
-            }, void 0, false)]
-          }, void 0, true), f.edificio === EDIFICIOS[4] && /*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Dirección del edificio"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-              value: f.otro,
-              onChange: e => set("otro", e.target.value),
-              placeholder: "Calle y número"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Piso y departamento"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-              value: f.depto,
-              onChange: e => set("depto", e.target.value),
-              placeholder: "3º B"
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn",
-            onClick: next,
-            disabled: !step0ok,
-            style: !step0ok ? {
-              opacity: .5,
-              cursor: "not-allowed"
-            } : null,
-            children: "Continuar"
-          }, void 0, false)]
-        }, void 0, true), step === 1 && /*#__PURE__*/_jsxDEV(_Fragment, {
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Día de entrega en tu edificio"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "chips",
-              children: DIAS.map(d => /*#__PURE__*/_jsxDEV("button", {
-                className: "chip" + (f.dia === d ? " on" : ""),
-                onClick: () => set("dia", d),
-                children: d
-              }, d, false))
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Franja horaria"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "chips",
-              children: FRANJAS.map(fr => /*#__PURE__*/_jsxDEV("button", {
-                className: "chip" + (f.franja === fr ? " on" : ""),
-                onClick: () => set("franja", fr),
-                children: fr
-              }, fr, false))
-            }, void 0, false)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "res",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "💚 Entrega agrupada"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: "Menos costo y emisiones"
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Tu edificio recibe"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: [f.dia, ", ", f.franja]
-              }, void 0, true)]
-            }, void 0, true)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn",
-            onClick: next,
-            disabled: !step1ok,
-            children: "Continuar"
-          }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn ghost",
-            onClick: back,
-            children: "Volver"
-          }, void 0, false)]
-        }, void 0, true), step === 2 && /*#__PURE__*/_jsxDEV(_Fragment, {
-          children: [/*#__PURE__*/_jsxDEV("div", {
-            className: "field",
-            children: [/*#__PURE__*/_jsxDEV("label", {
-              children: "Forma de pago"
-            }, void 0, false), /*#__PURE__*/_jsxDEV("div", {
-              className: "chips",
-              children: [/*#__PURE__*/_jsxDEV("button", {
-                className: "chip" + (f.pago === "tarjeta" ? " on" : ""),
-                onClick: () => set("pago", "tarjeta"),
-                children: "💳 Tarjeta"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("button", {
-                className: "chip" + (f.pago === "efectivo" ? " on" : ""),
-                onClick: () => set("pago", "efectivo"),
-                children: "💵 Efectivo en entrega"
-              }, void 0, false)]
-            }, void 0, true)]
-          }, void 0, true), f.pago === "tarjeta" && /*#__PURE__*/_jsxDEV(_Fragment, {
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              className: "field",
-              children: [/*#__PURE__*/_jsxDEV("label", {
-                children: "Número de tarjeta"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-                value: f.tarjeta,
-                inputMode: "numeric",
-                onChange: e => set("tarjeta", e.target.value.replace(/[^\d ]/g, "").slice(0, 19)),
-                placeholder: "4509 0000 0000 0000"
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              style: {
-                display: "flex",
-                gap: 12
-              },
-              children: [/*#__PURE__*/_jsxDEV("div", {
-                className: "field",
-                style: {
-                  flex: 1
-                },
-                children: [/*#__PURE__*/_jsxDEV("label", {
-                  children: "Vencimiento"
-                }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-                  value: f.venc,
-                  onChange: e => set("venc", e.target.value.slice(0, 5)),
-                  placeholder: "MM/AA"
-                }, void 0, false)]
-              }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-                className: "field",
-                style: {
-                  flex: 1
-                },
-                children: [/*#__PURE__*/_jsxDEV("label", {
-                  children: "CVV"
-                }, void 0, false), /*#__PURE__*/_jsxDEV("input", {
-                  value: f.cvv,
-                  inputMode: "numeric",
-                  onChange: e => set("cvv", e.target.value.replace(/\D/g, "").slice(0, 4)),
-                  placeholder: "123"
-                }, void 0, false)]
-              }, void 0, true)]
-            }, void 0, true)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-            className: "res",
-            children: [/*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Por entrega"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: peso(totalEntrega)
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Mensual · 4 entregas"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                style: {
-                  color: "var(--verde-osc)",
-                  fontSize: 16
-                },
-                children: peso(totalMensual)
-              }, void 0, false)]
-            }, void 0, true), /*#__PURE__*/_jsxDEV("div", {
-              children: [/*#__PURE__*/_jsxDEV("span", {
-                children: "Primera entrega"
-              }, void 0, false), /*#__PURE__*/_jsxDEV("b", {
-                children: [f.dia, ", ", f.franja]
-              }, void 0, true)]
-            }, void 0, true)]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn",
-            onClick: onDone,
-            disabled: !step2ok,
-            style: !step2ok ? {
-              opacity: .5,
-              cursor: "not-allowed"
-            } : null,
-            children: ["Confirmar suscripción · ", peso(totalMensual), "/mes"]
-          }, void 0, true), /*#__PURE__*/_jsxDEV("button", {
-            className: "pill-btn ghost",
-            onClick: back,
-            children: "Volver"
-          }, void 0, false)]
-        }, void 0, true)]
-      }, void 0, true)]
-    }, void 0, true)]
-  }, void 0, true);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "overlay",
+    onClick: onClose
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "modal-card",
+    style: {
+      position: "relative",
+      zIndex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-head"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Finalizar suscripción"), /*#__PURE__*/React.createElement("p", null, ["Datos de entrega", "Día y horario", "Pago y confirmación"][step])), /*#__PURE__*/React.createElement("button", {
+    className: "x",
+    onClick: onClose
+  }, "×")), /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "steps"
+  }, [0, 1, 2].map(i => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "s" + (i <= step ? " on" : "")
+  }))), step === 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Nombre y apellido"), /*#__PURE__*/React.createElement("input", {
+    value: f.nombre,
+    onChange: e => set("nombre", e.target.value),
+    placeholder: "María López"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Teléfono"), /*#__PURE__*/React.createElement("input", {
+    value: f.tel,
+    onChange: e => set("tel", e.target.value),
+    placeholder: "351 123 4567"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Edificio"), /*#__PURE__*/React.createElement("select", {
+    value: f.edificio,
+    onChange: e => set("edificio", e.target.value)
+  }, EDIFICIOS.map(e => /*#__PURE__*/React.createElement("option", {
+    key: e
+  }, e)))), f.edificio === EDIFICIOS[4] && /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Dirección del edificio"), /*#__PURE__*/React.createElement("input", {
+    value: f.otro,
+    onChange: e => set("otro", e.target.value),
+    placeholder: "Calle y número"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Piso y departamento"), /*#__PURE__*/React.createElement("input", {
+    value: f.depto,
+    onChange: e => set("depto", e.target.value),
+    placeholder: "3º B"
+  })), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    onClick: next,
+    disabled: !step0ok,
+    style: !step0ok ? {
+      opacity: .5,
+      cursor: "not-allowed"
+    } : null
+  }, "Continuar")), step === 1 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Día de entrega en tu edificio"), /*#__PURE__*/React.createElement("div", {
+    className: "chips"
+  }, DIAS.map(d => /*#__PURE__*/React.createElement("button", {
+    key: d,
+    className: "chip" + (f.dia === d ? " on" : ""),
+    onClick: () => set("dia", d)
+  }, d)))), /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Franja horaria"), /*#__PURE__*/React.createElement("div", {
+    className: "chips"
+  }, FRANJAS.map(fr => /*#__PURE__*/React.createElement("button", {
+    key: fr,
+    className: "chip" + (f.franja === fr ? " on" : ""),
+    onClick: () => set("franja", fr)
+  }, fr)))), /*#__PURE__*/React.createElement("div", {
+    className: "res"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "💚 Entrega agrupada"), /*#__PURE__*/React.createElement("b", null, "Menos costo y emisiones")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Tu edificio recibe"), /*#__PURE__*/React.createElement("b", null, f.dia, ", ", f.franja))), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    onClick: next,
+    disabled: !step1ok
+  }, "Continuar"), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn ghost",
+    onClick: back
+  }, "Volver")), step === 2 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Forma de pago"), /*#__PURE__*/React.createElement("div", {
+    className: "chips"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "chip" + (f.pago === "tarjeta" ? " on" : ""),
+    onClick: () => set("pago", "tarjeta")
+  }, "💳 Tarjeta"), /*#__PURE__*/React.createElement("button", {
+    className: "chip" + (f.pago === "efectivo" ? " on" : ""),
+    onClick: () => set("pago", "efectivo")
+  }, "💵 Efectivo en entrega"))), f.pago === "tarjeta" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "field"
+  }, /*#__PURE__*/React.createElement("label", null, "Número de tarjeta"), /*#__PURE__*/React.createElement("input", {
+    value: f.tarjeta,
+    inputMode: "numeric",
+    onChange: e => set("tarjeta", e.target.value.replace(/[^\d ]/g, "").slice(0, 19)),
+    placeholder: "4509 0000 0000 0000"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "Vencimiento"), /*#__PURE__*/React.createElement("input", {
+    value: f.venc,
+    onChange: e => set("venc", e.target.value.slice(0, 5)),
+    placeholder: "MM/AA"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "field",
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "CVV"), /*#__PURE__*/React.createElement("input", {
+    value: f.cvv,
+    inputMode: "numeric",
+    onChange: e => set("cvv", e.target.value.replace(/\D/g, "").slice(0, 4)),
+    placeholder: "123"
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "res"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Por entrega"), /*#__PURE__*/React.createElement("b", null, peso(totalEntrega))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Mensual · 4 entregas"), /*#__PURE__*/React.createElement("b", {
+    style: {
+      color: "var(--verde-osc)",
+      fontSize: 16
+    }
+  }, peso(totalMensual))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Primera entrega"), /*#__PURE__*/React.createElement("b", null, f.dia, ", ", f.franja))), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn",
+    onClick: onDone,
+    disabled: !step2ok,
+    style: !step2ok ? {
+      opacity: .5,
+      cursor: "not-allowed"
+    } : null
+  }, "Confirmar suscripción · ", peso(totalMensual), "/mes"), /*#__PURE__*/React.createElement("button", {
+    className: "pill-btn ghost",
+    onClick: back
+  }, "Volver")))));
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(/*#__PURE__*/_jsxDEV(App, {}, void 0, false));
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(React.createElement(App));
+root.render(/*#__PURE__*/React.createElement(App, null));
 </script>
 </body>
 </html>
-
-
-
